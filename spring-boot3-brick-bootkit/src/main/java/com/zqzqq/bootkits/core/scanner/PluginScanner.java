@@ -1,0 +1,39 @@
+/**
+ * Copyright [2019-Present] [starBlues]
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+
+package com.zqzqq.bootkits.core.scanner;
+
+import java.nio.file.Path;
+import java.util.List;
+
+/**
+ * 插件扫描器
+ * @author starBlues
+ * @since 3.0.0
+ * @version 3.0.0
+ */
+public interface PluginScanner {
+
+    /**
+     * 浠?rootDir 集合中壂鎻忓嚭插件璺緞
+     * @param rootDir 鏍圭洰褰?
+     * @return 鎵弿鍑虹殑鐩綍
+     */
+    List<Path> scan(List<String> rootDir);
+
+
+}
+

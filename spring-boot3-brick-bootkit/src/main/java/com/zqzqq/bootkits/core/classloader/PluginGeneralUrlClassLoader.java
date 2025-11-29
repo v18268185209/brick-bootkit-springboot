@@ -1,0 +1,86 @@
+/**
+ * Copyright [2019-Present] [starBlues]
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.zqzqq.bootkits.core.classloader;
+
+import com.zqzqq.bootkits.core.descriptor.InsidePluginDescriptor;
+import com.zqzqq.bootkits.loader.classloader.GeneralUrlClassLoader;
+import lombok.extern.slf4j.Slf4j;
+
+import java.io.IOException;
+
+/**
+ * 插件基础 url classLoader
+ *
+ * @author starBlues
+ * @version 3.1.0
+ * @since 3.0.4
+ */
+@Slf4j
+public class PluginGeneralUrlClassLoader extends GeneralUrlClassLoader implements PluginResourceLoaderFactory{
+
+    private final PluginResourceLoaderFactory proxy;
+
+    public PluginGeneralUrlClassLoader(String name, GeneralUrlClassLoader parent) {
+        super(name, parent);
+        this.proxy = new PluginResourceLoaderFactoryProxy(this, parent);
+    }
+
+    @Override
+    public void addResource(InsidePluginDescriptor descriptor) throws Exception {
+        proxy.addResource(descriptor);
+    }
+
+    @Override
+    public void close() throws IOException {
+        super.close();
+    }
+    
+    /**
+     * 增强不Spring Boot 3.5.x的兼容性？
+     * Spring Boot 3.5.x涓彲鑳戒娇鐢ㄤ簡鏇翠弗鏍肩殑绫诲姞杞芥満锟?
+     */
+    @Override
+    protected Class<?> loadClass(String name, boolean resolve) throws ClassNotFoundException {
+        try {
+            // 棣栧厛尝试浠庣埗绫诲姞杞藉櫒加载Spring鐩稿叧锟?
+            if (name.startsWith("org.springframework.") || 
+                name.startsWith("jakarta.") || 
+                name.startsWith("java.") ||
+                name.startsWith("javax.")) {
+                try {
+                    return getParent().loadClass(name);
+                } catch (ClassNotFoundException ignored) {
+                    // 忽略异常锛岀户缁皾璇曞叾浠栨柟寮忓姞锟?
+                }
+            }
+            // 浣跨敤标准绫诲姞杞介€昏緫
+            return super.loadClass(name, resolve);
+        } catch (ClassNotFoundException e) {
+            // 如果标准加载失败锛屽皾璇曚粠线程上下文件类加载器加锟?
+            try {
+                ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
+                if (contextClassLoader != null && contextClassLoader != this) {
+                    return contextClassLoader.loadClass(name);
+                }
+            } catch (ClassNotFoundException ignored) {
+                // 忽略异常
+            }
+            throw e;
+        }
+    }
+}
+

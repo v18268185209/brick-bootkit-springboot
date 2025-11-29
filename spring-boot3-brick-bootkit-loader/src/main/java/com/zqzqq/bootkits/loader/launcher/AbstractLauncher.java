@@ -1,0 +1,58 @@
+/**
+ * Copyright [2019-Present] [starBlues]
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+
+package com.zqzqq.bootkits.loader.launcher;
+
+/**
+ * 插件的启动引导器
+ *
+ * @author starBlues
+ * @since 3.0.0
+ * @version 3.0.2
+ */
+public abstract class AbstractLauncher<R> implements Launcher<R> {
+
+    @Override
+    public R run(String... args) throws Exception {
+        ClassLoader classLoader = createClassLoader(args);
+        Thread thread = Thread.currentThread();
+        ClassLoader oldClassLoader  = thread.getContextClassLoader();
+        try {
+            thread.setContextClassLoader(classLoader);
+            return launch(classLoader, args);
+        } finally {
+            thread.setContextClassLoader(oldClassLoader);
+        }
+    }
+
+    /**
+     * 鍒涘缓classloader
+     * @param args 参数
+     * @return ClassLoader
+     * @throws Exception 鍒涘缓异常
+     */
+    protected abstract ClassLoader createClassLoader(String... args) throws Exception;
+
+    /**
+     * 子类实现具体的启动方法
+     * @param classLoader 褰撳墠鐨凜lassLoader
+     * @param args 鍚姩参数
+     * @return 鍚姩杩斿洖鍊?
+     * @throws Exception 鍚姩异常
+     */
+    protected abstract R launch(ClassLoader classLoader, String... args) throws Exception;
+
+}

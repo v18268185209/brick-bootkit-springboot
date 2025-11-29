@@ -1,0 +1,122 @@
+package com.zqzqq.bootkits.core.config;
+
+import lombok.Data;
+
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+
+/**
+ * 插件配置版本
+ * 
+ * @author zqzqq
+ * @since 4.1.0
+ */
+@Data
+public class PluginConfigurationVersion {
+    
+    /**
+     * 版本ID
+     */
+    private String versionId;
+    
+    /**
+     * 配置内容
+     */
+    private PluginConfiguration configuration;
+    
+    /**
+     * 创建时间戳
+     */
+    private long timestamp;
+    
+    /**
+     * 创建时间
+     */
+    private LocalDateTime createdAt;
+    
+    /**
+     * 变更原因
+     */
+    private String changeReason;
+    
+    /**
+     * 变更用户
+     */
+    private String changedBy;
+    
+    /**
+     * 版本标签
+     */
+    private String tag;
+    
+    public PluginConfigurationVersion() {
+        this.timestamp = System.currentTimeMillis();
+        this.createdAt = LocalDateTime.ofInstant(
+                java.time.Instant.ofEpochMilli(timestamp), 
+                ZoneId.systemDefault());
+    }
+    
+    public PluginConfigurationVersion(String versionId, PluginConfiguration configuration, 
+                                    long timestamp, String changeReason) {
+        this.versionId = versionId;
+        this.configuration = configuration.copy(); // 创建副本避免引用问题
+        this.timestamp = timestamp;
+        this.createdAt = LocalDateTime.ofInstant(
+                java.time.Instant.ofEpochMilli(timestamp), 
+                ZoneId.systemDefault());
+        this.changeReason = changeReason;
+    }
+    
+    /**
+     * 获取版本描述
+     */
+    public String getDescription() {
+        StringBuilder desc = new StringBuilder();
+        desc.append("Version: ").append(versionId);
+        if (tag != null) {
+            desc.append(" (").append(tag).append(")");
+        }
+        if (changeReason != null) {
+            desc.append(" - ").append(changeReason);
+        }
+        if (changedBy != null) {
+            desc.append(" by ").append(changedBy);
+        }
+        return desc.toString();
+    }
+    
+    /**
+     * 检查版本是否有效
+     */
+    public boolean isValid() {
+        return versionId != null && configuration != null && configuration.isValid();
+    }
+    
+    /**
+     * 获取版本年龄（毫秒）
+     */
+    public long getAge() {
+        return System.currentTimeMillis() - timestamp;
+    }
+    
+    /**
+     * 检查版本是否过期
+     */
+    public boolean isExpired(long maxAgeMillis) {
+        return getAge() > maxAgeMillis;
+    }
+
+    /**
+     * 获取版本ID（public方法，确保兼容性）
+     */
+    public String getVersionId() {
+        return versionId;
+    }
+
+    /**
+     * 获取配置（public方法，确保兼容性）
+     */
+    public PluginConfiguration getConfiguration() {
+        return configuration;
+    }
+}

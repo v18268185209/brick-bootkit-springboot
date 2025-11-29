@@ -1,0 +1,7 @@
+# Auto Configuration Import Filters
+org.springframework.boot.autoconfigure.AutoConfigurationImportFilter=\
+com.zqzqq.bootkits.bootstrap.PluginDisableAutoConfiguration
+
+# Auto Configure
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.zqzqq.bootkits.bootstrap.ResolveHttpMessageConvertersConfiguration

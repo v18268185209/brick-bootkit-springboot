@@ -1,0 +1,62 @@
+# 插件监控配置示例
+plugin:
+  monitoring:
+    # 是否启用监控
+    enabled: true
+    
+    # 监控数据收集间隔（秒）
+    collection-interval: 30
+    
+    # 内存监控
+    memory-monitoring-enabled: true
+    memory-warning-threshold: 80.0
+    memory-critical-threshold: 95.0
+    
+    # CPU监控
+    cpu-monitoring-enabled: true
+    cpu-warning-threshold: 80.0
+    cpu-critical-threshold: 95.0
+    
+    # 线程监控
+    thread-monitoring-enabled: true
+    thread-warning-threshold: 100
+    thread-critical-threshold: 200
+    
+    # 类加载监控
+    class-loading-monitoring-enabled: true
+    
+    # GC监控
+    gc-monitoring-enabled: true
+    
+    # 性能报告
+    performance-report-enabled: true
+    performance-report-interval: 60
+    
+    # 慢操作检测
+    slow-operation-detection-enabled: true
+    slow-operation-threshold: 5000
+    
+    # 历史数据保留
+    history-retention-days: 7
+    
+    # 实时监控
+    real-time-monitoring-enabled: false
+    real-time-update-interval: 5
+
+# Micrometer 配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+    tags:
+      application: spring-boot3-brick-bootkit
