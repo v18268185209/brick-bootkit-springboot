@@ -25,6 +25,8 @@ package com.zqzqq.bootkits.loader.launcher;
  */
 public abstract class AbstractLauncher<R> implements Launcher<R> {
 
+    private volatile boolean classLoaderRestored = false;
+
     @Override
     public R run(String... args) throws Exception {
         ClassLoader classLoader = createClassLoader(args);
@@ -32,10 +34,46 @@ public abstract class AbstractLauncher<R> implements Launcher<R> {
         ClassLoader oldClassLoader  = thread.getContextClassLoader();
         try {
             thread.setContextClassLoader(classLoader);
-            return launch(classLoader, args);
+            return runWithContextClassLoader(classLoader, args);
         } finally {
-            thread.setContextClassLoader(oldClassLoader);
+            restoreContextClassLoader(oldClassLoader);
         }
+    }
+
+    /**
+     * 在classloader上下文中运行
+     * @param classLoader classLoader
+     * @param args 参数
+     * @return 运行结果
+     * @throws Exception 异常
+     */
+    protected R runWithContextClassLoader(ClassLoader classLoader, String... args) throws Exception {
+        return launch(classLoader, args);
+    }
+
+    /**
+     * 恢复classloader上下文
+     * @param oldClassLoader 原来的classLoader
+     */
+    protected void restoreContextClassLoader(ClassLoader oldClassLoader) {
+        Thread thread = Thread.currentThread();
+        thread.setContextClassLoader(oldClassLoader);
+        classLoaderRestored = true;
+    }
+
+    /**
+     * 检查类加载器是否已恢复
+     * @return true 如果已恢复，false 如果未恢复
+     */
+    protected boolean isClassLoaderRestored() {
+        return classLoaderRestored;
+    }
+
+    /**
+     * 重置类加载器恢复状态
+     */
+    protected void resetClassLoaderRestored() {
+        this.classLoaderRestored = false;
     }
 
     /**

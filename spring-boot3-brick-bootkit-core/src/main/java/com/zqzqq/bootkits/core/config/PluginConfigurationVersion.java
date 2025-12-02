@@ -1,7 +1,5 @@
 package com.zqzqq.bootkits.core.config;
 
-import lombok.Data;
-
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
@@ -11,7 +9,6 @@ import java.time.ZoneId;
  * @author zqzqq
  * @since 4.1.0
  */
-@Data
 public class PluginConfigurationVersion {
     
     /**
@@ -118,5 +115,54 @@ public class PluginConfigurationVersion {
      */
     public PluginConfiguration getConfiguration() {
         return configuration;
+    }
+    
+    // Getters and Setters
+    public void setVersionId(String versionId) {
+        this.versionId = versionId;
+    }
+
+    public void setConfiguration(PluginConfiguration configuration) {
+        this.configuration = configuration;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getChangeReason() {
+        return changeReason;
+    }
+
+    public void setChangeReason(String changeReason) {
+        this.changeReason = changeReason;
+    }
+
+    public String getChangedBy() {
+        return changedBy;
+    }
+
+    public void setChangedBy(String changedBy) {
+        this.changedBy = changedBy;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
     }
 }

@@ -87,6 +87,11 @@
         <spring-boot.version>3.1.5</spring-boot.version>
         <maven-javadoc-plugin.version>3.1.0</maven-javadoc-plugin.version>
         <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
+        <jacoco.version>0.8.11</jacoco.version>
+        <jacoco.check.percentage>80</jacoco.check.percentage>
+        <spotbugs.version>4.7.0</spotbugs.version>
+        <checkstyle.version>10.16.0</checkstyle.version>
+        <pmd.version>7.0.0</pmd.version>
     </properties>
 
     <dependencyManagement>
@@ -241,6 +246,26 @@
                     <source>${java.version}</source>
                     <target>${java.version}</target>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacoco.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
 
             <plugin>

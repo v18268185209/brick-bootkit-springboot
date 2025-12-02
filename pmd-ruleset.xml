@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset name="Custom PMD Rules"
+    xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
+
+    <description>
+        自定义 PMD 规则集合，适用于 Spring Boot 插件式开发框架
+        主要检查代码质量和最佳实践
+    </description>
+
+    <!-- 基础规则 -->
+    <rule ref="category/java/bestpractices.xml">
+        <exclude name="AvoidPrintStackTrace"/>
+        <exclude name="AvoidUsingShortType"/>
+        <exclude name="AvoidUsingVolatile"/>
+        <exclude name="AvoidReassigningParameters"/>
+        <exclude name="ForLoopCanBeForeach"/>
+    </rule>
+    
+    <!-- 代码设计规则 -->
+    <rule ref="category/java/design.xml">
+        <exclude name="AvoidDeeplyNestedIfStmts"/>
+        <exclude name="AvoidRethrowingException"/>
+        <exclude name="CyclomaticComplexity"/>
+        <exclude name="ExcessiveImports"/>
+        <exclude name="LawOfDemeter"/>
+        <exclude name="LooseCoupling"/>
+        <exclude name="SignatureDeclareThrowsException"/>
+        <exclude name="SimplifyBooleanReturns"/>
+        <exclude name="SimplifyBooleanExpressions"/>
+        <exclude name="TooManyFields"/>
+        <exclude name="TooManyMethods"/>
+        <exclude name="UseInterfaceInsteadOfAbstractClass"/>
+    </rule>
+    
+    <!-- 文档规则 -->
+    <rule ref="category/java/documentation.xml">
+        <exclude name="CommentContent"/>
+        <exclude name="CommentRequired"/>
+        <exclude name="CommentSize"/>
+        <exclude name="UncommentEmptyConstructor"/>
+        <exclude name="UncommentEmptyMethodBody"/>
+    </rule>
+    
+    <!-- 错误处理规则 -->
+    <rule ref="category/java/errorprone.xml">
+        <exclude name="AvoidAccessibilityAlteration"/>
+        <exclude name="AvoidBranchingStatementAsLastInLoop"/>
+        <exclude name="AvoidDuplicateLiterals"/>
+        <exclude name="AvoidFieldNameMatchingTypeName"/>
+        <exclude name="AvoidInstantiatingObjectsInLoops"/>
+        <exclude name="AvoidLiteralsInIfCondition"/>
+        <exclude name="AvoidLosingExceptionInformation"/>
+        <exclude name="AvoidMultipleDeclarationsOnOneLine"/>
+        <exclude name="AvoidPrivateStaticFinalLoggers"/>
+        <exclude name="AvoidReassigningLoopVariables"/>
+        <exclude name="AvoidSynchronizedAtMethodLevel"/>
+        <exclude name="AvoidThrowingNullPointerException"/>
+        <exclude name="AvoidThrowingRawExceptionTypes"/>
+        <exclude name="BadComparison"/>
+        <exclude name="BigIntegerInstantiation"/>
+        <exclude name="BooleanInstantiation"/>
+        <exclude name="BrokenNullCheck"/>
+        <exclude name="CallSuperInConstructor"/>
+        <exclude name="CheckResultSet"/>
+        <exclude name="ClassCastExceptionWithToArray"/>
+        <exclude name="CloneMethodMustBePublic"/>
+        <exclude name="CloneMethodMustImplementCloneable"/>
+        <exclude name="CloneThrowsCloneNotSupportedException"/>
+        <exclude name="CloseResource"/>
+        <exclude name="CompareObjectsWithEquals"/>
+        <exclude name="ConstructorCallsOverridableMethod"/>
+        <exclude name="DataflowAnomalyAnalysis"/>
+        <exclude name="DoNotCallGarbageCollectionExplicitly"/>
+        <exclude name="DoNotCallSystemExit"/>
+        <exclude name="DoNotHardCodeSDCard"/>
+        <exclude name="EmptyCatchBlock"/>
+        <exclude name="EmptyIfStmt"/>
+        <exclude name="EmptyWhileStmt"/>
+        <exclude name="FinalizeDoesNotCallSuperFinalize"/>
+        <exclude name="FinalizeOnlyCallsSuperFinalize"/>
+        <exclude name="FinallyBlocksCannotGuardExceptions"/>
+        <exclude name="ForLoopShouldBeWhileLoop"/>
+        <exclude name="IdempotentOperations"/>
+        <exclude name="ImplicitSwitchFallThrough"/>
+        <exclude name="InvalidSlf4jMessageFormat"/>
+        <exclude name="JUnitSpelling"/>
+        <exclude name="JUnitStaticSuite"/>
+        <exclude name="LoggerIsNotStaticFinal"/>
+        <exclude name="MethodWithSameNameAsEnclosingClass"/>
+        <exclude name="MisplacedNullCheck"/>
+        <exclude name="MissingBreakInSwitch"/>
+        <exclude name="MissingSerialVersionUID"/>
+        <exclude name="MissingStaticMethodInNonInstantiatableClass"/>
+        <exclude name="MoreThanOneLogger"/>
+        <exclude name="NonCaseLabelInSwitchStatement"/>
+        <exclude name="NonStaticInitializer"/>
+        <exclude name="NullAssignment"/>
+        <exclude name="NullCheckOnVaryingFieldDecleration"/>
+        <exclude name="OptimizableToArrayCall"/>
+        <exclude name="OverrideBothEqualsAndHashcode"/>
+        <exclude name="ProperCloneImplementation"/>
+        <exclude name="ProperLogger"/>
+        <exclude name="ReturnFromFinallyBlock"/>
+        <exclude name="ReturnNullInsteadOfThrow"/>
+        <exclude name="SimpleDateFormatNeeded"/>
+        <exclude name="SimplifiableTestAssertion"/>
+        <exclude name="SingletonClassReturningNewInstance"/>
+        <exclude name="SingletonWithStaticMethods"/>
+        <exclude name="StaticEJBFieldShouldBeFinal"/>
+        <exclude name="StringBufferInstantiationWithChar"/>
+        <exclude name="SuspiciousEqualsMethodName"/>
+        <exclude name="SuspiciousHashcodeMethodName"/>
+        <exclude name="SuspiciousListIndexOf"/>
+        <exclude name="SuspiciousMethodOverload"/>
+        <exclude name="SuspiciousWrapperEquals"/>
+        <exclude name="TestClassWithoutTestCases"/>
+        <exclude name="UnusedNullCheckInEquals"/>
+        <exclude name="UnusedPrivateField"/>
+        <exclude name="UnusedPrivateMethod"/>
+        <exclude name="UseCorrectExceptionLogging"/>
+        <exclude name="UseEqualsToCompareStrings"/>
+        <exclude name="UseObjectForClearerAPI"/>
+        <exclude name="UseVarargs"/>
+    </rule>
+    
+    <!-- 性能规则 -->
+    <rule ref="category/java/performance.xml">
+        <exclude name="AvoidArrayLoops"/>
+        <exclude name="AvoidInstantiatingObjectsInLoops"/>
+        <exclude name="AvoidUsingShortType"/>
+        <exclude name="BigIntegerInstantiation"/>
+        <exclude name="BooleanInstantiation"/>
+        <exclude name="ConsecutiveAppendsShouldReuse"/>
+        <exclude name="ConsecutiveLiteralAppends"/>
+        <exclude name="InefficientEmptyStringCheck"/>
+        <exclude name="InefficientStringBuffering"/>
+        <exclude name="LocalVariableCouldBeFinal"/>
+        <exclude name="MethodCallInLoopCondition"/>
+        <exclude name="PrematureDeclaration"/>
+        <exclude name="RedundantFieldInitializer"/>
+        <exclude name="StringBufferInstantiationWithChar"/>
+        <exclude name="TooFewBranchesForASwitchStatement"/>
+        <exclude name="UnnecessaryWrapperObjectCreation"/>
+        <exclude name="UseArrayListInsteadOfVector"/>
+        <exclude name="UseArraysAsList"/>
+        <exclude name="UseStringBufferForStringAppends"/>
+    </rule>
+    
+    <!-- 安全规则 -->
+    <rule ref="category/java/security.xml"/>
+    
+    <!-- 编码风格规则 -->
+    <rule ref="category/java/codestyle.xml">
+        <exclude name="AtLeastOneConstructor"/>
+        <exclude name="AvoidDollarSigns"/>
+        <exclude name="AvoidFinalLocalVariable"/>
+        <exclude name="AvoidInstanceofChecksInCatchClause"/>
+        <exclude name="AvoidNestedBlocks"/>
+        <exclude name="AvoidProtectedFieldInFinalClass"/>
+        <exclude name="AvoidProtectedMethodInFinalClassNotExtending"/>
+        <exclude name="AvoidSynchronizedBlockMethod"/>
+        <exclude name="AvoidUsingNativeCode"/>
+        <exclude name="BooleanGetMethodName"/>
+        <exclude name="CallSuperInConstructor"/>
+        <exclude name="DefaultPackage"/>
+        <exclude name="EmptyMethodInAbstractClassShouldBeAbstract"/>
+        <exclude name="ExtendsObject"/>
+        <exclude name="FieldDeclarationRepeatedName"/>
+        <exclude name="ForLoopShouldBeWhileLoop"/>
+        <exclude name="ForLoopsMustUseBraces"/>
+        <exclude name="GenericsNaming"/>
+        <exclude name="IdenticalCatchBranches"/>
+        <exclude name="IfElseStmtsMustUseBraces"/>
+        <exclude name="IfStmtsMustUseBraces"/>
+        <exclude name="LocalHomeNamingConvention"/>
+        <exclude name="LocalInterfaceSessionNamingConvention"/>
+        <exclude name="LongVariable"/>
+        <exclude name="MIsLeadingVariableName"/>
+        <exclude name="MethodArgumentCouldBeFinal"/>
+        <exclude name="MethodNamingConventions"/>
+        <exclude name="MisleadingMethodName"/>
+        <exclude name="NoPackage"/>
+        <exclude name="PackageCase"/>
+        <exclude name="PrematureDeclaration"/>
+        <exclude name="RemoteInterfaceNamingConvention"/>
+        <exclude name="RemoteSessionInterfaceNamingConvention"/>
+        <exclude name="ShortClassName"/>
+        <exclude name="ShortMethodName"/>
+        <exclude name="ShortVariable"/>
+        <exclude name="TooManyStaticImports"/>
+        <exclude name="UnnecessaryConstructor"/>
+        <exclude name="UnnecessaryLocalBeforeReturn"/>
+        <exclude name="UnnecessaryParentheses"/>
+        <exclude name="UnnecessaryReturn"/>
+        <exclude name="UseShortClassName"/>
+        <exclude name="UseUnderscoresInSourceNames"/>
+        <exclude name="VariableNamingConventions"/>
+        <exclude name="WhileLoopsMustUseBraces"/>
+    </rule>
+    
+    <!-- 废弃规则 -->
+    <rule ref="category/java/emptystatement.xml">
+        <exclude name="EmptyCatchBlock"/>
+        <exclude name="EmptyIfStmt"/>
+        <exclude name="EmptyWhileStmt"/>
+    </rule>
+    
+    <!-- 特定的插件相关规则 -->
+    <rule ref="category/java/design.xml/ExcessiveClassLength">
+        <properties>
+            <property name="minimum" value="1000"/>
+        </properties>
+    </rule>
+    
+    <rule ref="category/java/design.xml/TooManyMethods">
+        <properties>
+            <property name="maxmethods" value="20"/>
+        </properties>
+    </rule>
+    
+    <rule ref="category/java/design.xml/TooManyFields">
+        <properties>
+            <property name="maxfields" value="20"/>
+        </properties>
+    </rule>
+    
+    <rule ref="category/java/design.xml/CyclomaticComplexity">
+        <properties>
+            <property name="max" value="15"/>
+        </properties>
+    </rule>
+
+</ruleset>

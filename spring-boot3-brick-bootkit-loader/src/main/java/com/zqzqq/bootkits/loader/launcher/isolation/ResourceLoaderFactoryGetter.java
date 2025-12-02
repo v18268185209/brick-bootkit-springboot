@@ -91,11 +91,15 @@ public class ResourceLoaderFactoryGetter {
         }
     }
 
-    @AllArgsConstructor
     @Getter
     public static class PluginMeta{
         private final String packageType;
         private final Properties properties;
+
+        public PluginMeta(String packageType, Properties properties) {
+            this.packageType = packageType;
+            this.properties = properties;
+        }
     }
 
 }

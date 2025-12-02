@@ -1,14 +1,11 @@
 package com.zqzqq.bootkits.core.monitoring;
 
-import lombok.Data;
-
 /**
  * 插件监控配置
  * 
  * @author zqzqq
  * @since 4.1.0
  */
-@Data
 public class PluginMonitoringConfiguration {
     
     /**
@@ -362,4 +359,68 @@ public class PluginMonitoringConfiguration {
     public void setThreadCriticalThreshold(int threadCriticalThreshold) {
         this.threadCriticalThreshold = threadCriticalThreshold;
     }
-}
+
+    /**
+     * 设置内存警告阈值（public方法，确保兼容性）
+     */
+    public void setMemoryWarningThreshold(double memoryWarningThreshold) {
+        this.memoryWarningThreshold = memoryWarningThreshold;
+    }
+
+    /**
+     * 设置内存严重警告阈值（public方法，确保兼容性）
+     */
+    public void setMemoryCriticalThreshold(double memoryCriticalThreshold) {
+        this.memoryCriticalThreshold = memoryCriticalThreshold;
+    }
+
+    /**
+     * 设置CPU警告阈值（public方法，确保兼容性）
+     */
+    public void setCpuWarningThreshold(double cpuWarningThreshold) {
+        this.cpuWarningThreshold = cpuWarningThreshold;
+    }
+
+    /**
+     * 设置CPU严重警告阈值（public方法，确保兼容性）
+     */
+    public void setCpuCriticalThreshold(double cpuCriticalThreshold) {
+        this.cpuCriticalThreshold = cpuCriticalThreshold;
+    }
+
+    /**
+     * 设置线程警告阈值（public方法，确保兼容性）
+     */
+    public void setThreadWarningThreshold(int threadWarningThreshold) {
+        this.threadWarningThreshold = threadWarningThreshold;
+    }
+    
+    /**
+     * 获取慢操作阈值（public方法，确保兼容性）
+     */
+    public long getSlowOperationThreshold() {
+        return slowOperationThreshold;
+    }
+
+    /**
+     * 获取实时监控更新间隔（public方法，确保兼容性）
+     */
+    public long getRealTimeUpdateInterval() {
+        return realTimeUpdateInterval;
+    }
+
+    /**
+     * 获取是否启用实时监控（public方法，确保兼容性）
+     */
+    public boolean isRealTimeMonitoringEnabled() {
+        return realTimeMonitoringEnabled;
+    }
+
+    /**
+     * 获取是否启用慢操作检测（public方法，确保兼容性）
+     */
+    public boolean isSlowOperationDetectionEnabled() {
+        return slowOperationDetectionEnabled;
+    }
+    
+    }

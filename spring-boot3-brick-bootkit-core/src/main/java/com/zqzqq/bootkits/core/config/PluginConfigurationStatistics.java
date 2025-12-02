@@ -1,15 +1,11 @@
 package com.zqzqq.bootkits.core.config;
 
-import lombok.Data;
-import lombok.AllArgsConstructor;
-
 /**
  * 插件配置统计信息
  * 
  * @author zqzqq
  * @since 4.1.0
  */
-@Data
 public class PluginConfigurationStatistics {
     
     public PluginConfigurationStatistics() {
@@ -46,6 +42,40 @@ public class PluginConfigurationStatistics {
      * 监听器数量
      */
     private int listenerCount;
+    
+    // Manually implemented getters
+    public int getTotalConfigurations() {
+        return totalConfigurations;
+    }
+    
+    public int getTotalVersions() {
+        return totalVersions;
+    }
+    
+    public int getActiveWatchers() {
+        return activeWatchers;
+    }
+    
+    public int getListenerCount() {
+        return listenerCount;
+    }
+    
+    // Manually implemented setters
+    public void setTotalConfigurations(int totalConfigurations) {
+        this.totalConfigurations = totalConfigurations;
+    }
+    
+    public void setTotalVersions(int totalVersions) {
+        this.totalVersions = totalVersions;
+    }
+    
+    public void setActiveWatchers(int activeWatchers) {
+        this.activeWatchers = activeWatchers;
+    }
+    
+    public void setListenerCount(int listenerCount) {
+        this.listenerCount = listenerCount;
+    }
     
     /**
      * 获取平均版本数

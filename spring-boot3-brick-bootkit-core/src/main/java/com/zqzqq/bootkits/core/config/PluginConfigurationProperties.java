@@ -1,6 +1,5 @@
 package com.zqzqq.bootkits.core.config;
 
-import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
@@ -9,7 +8,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @author zqzqq
  * @since 4.1.0
  */
-@Data
 @ConfigurationProperties(prefix = "plugin.configuration")
 public class PluginConfigurationProperties {
     
@@ -86,23 +84,110 @@ public class PluginConfigurationProperties {
     }
 
     /**
-     * 判断热重载是否启用
-     */
-    public boolean isHotReloadEnabled() {
-        return hotReloadEnabled;
-    }
-
-    /**
-     * 判断持久化是否启用
-     */
-    public boolean isPersistenceEnabled() {
-        return persistenceEnabled;
-    }
-
-    /**
      * 获取配置目录
      */
     public String getConfigDirectory() {
         return configDirectory;
+    }
+
+    public void setConfigDirectory(String configDirectory) {
+        this.configDirectory = configDirectory;
+    }
+    
+    // Getters and Setters
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public boolean isHotReloadEnabled() {
+        return hotReloadEnabled;
+    }
+
+    public void setHotReloadEnabled(boolean hotReloadEnabled) {
+        this.hotReloadEnabled = hotReloadEnabled;
+    }
+
+    public long getHotReloadDelay() {
+        return hotReloadDelay;
+    }
+
+    public void setHotReloadDelay(long hotReloadDelay) {
+        this.hotReloadDelay = hotReloadDelay;
+    }
+
+    public boolean isPersistenceEnabled() {
+        return persistenceEnabled;
+    }
+
+    public void setPersistenceEnabled(boolean persistenceEnabled) {
+        this.persistenceEnabled = persistenceEnabled;
+    }
+
+    public int getMaxVersionsPerPlugin() {
+        return maxVersionsPerPlugin;
+    }
+
+    public void setMaxVersionsPerPlugin(int maxVersionsPerPlugin) {
+        this.maxVersionsPerPlugin = maxVersionsPerPlugin;
+    }
+
+    public int getCacheSize() {
+        return cacheSize;
+    }
+
+    public void setCacheSize(int cacheSize) {
+        this.cacheSize = cacheSize;
+    }
+
+    public boolean isValidationEnabled() {
+        return validationEnabled;
+    }
+
+    public void setValidationEnabled(boolean validationEnabled) {
+        this.validationEnabled = validationEnabled;
+    }
+
+    public boolean isEncryptionEnabled() {
+        return encryptionEnabled;
+    }
+
+    public void setEncryptionEnabled(boolean encryptionEnabled) {
+        this.encryptionEnabled = encryptionEnabled;
+    }
+
+    public String getEncryptionKey() {
+        return encryptionKey;
+    }
+
+    public void setEncryptionKey(String encryptionKey) {
+        this.encryptionKey = encryptionKey;
+    }
+
+    public boolean isBackupEnabled() {
+        return backupEnabled;
+    }
+
+    public void setBackupEnabled(boolean backupEnabled) {
+        this.backupEnabled = backupEnabled;
+    }
+
+    public String getBackupDirectory() {
+        return backupDirectory;
+    }
+
+    public void setBackupDirectory(String backupDirectory) {
+        this.backupDirectory = backupDirectory;
+    }
+
+    public int getBackupRetentionDays() {
+        return backupRetentionDays;
+    }
+
+    public void setBackupRetentionDays(int backupRetentionDays) {
+        this.backupRetentionDays = backupRetentionDays;
     }
 }

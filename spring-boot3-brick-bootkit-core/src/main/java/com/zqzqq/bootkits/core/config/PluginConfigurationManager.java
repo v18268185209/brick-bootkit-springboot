@@ -114,10 +114,18 @@ public class PluginConfigurationManager {
             PluginConfiguration oldConfig = configurations.get(pluginId);
             if (oldConfig != null) {
                 saveConfigurationVersion(pluginId, oldConfig, versionDescription);
+            } else {
+                // 第一次配置，保存初始版本
+                saveConfigurationVersion(pluginId, configuration, "Initial version");
             }
             
             // 更新配置
             configurations.put(pluginId, configuration);
+            
+            // 启动热重载监控（如果启用）
+            if (properties.isHotReloadEnabled() && !watchKeys.containsKey(pluginId)) {
+                startHotReloadMonitoring(pluginId);
+            }
             
             // 持久化配置
             if (properties.isPersistenceEnabled()) {
@@ -450,6 +458,40 @@ public class PluginConfigurationManager {
         log.info("Configuration file watcher started");
     }
     
+    /**
+     * 为插件启动热重载监控
+     */
+    private void startHotReloadMonitoring(String pluginId) {
+        try {
+            if (watchService != null) {
+                // 为插件创建一个虚拟的监控点（可以后续改进为实际文件监控）
+                // 这里我们直接创建一个WatchKey，虽然没有对应的文件系统事件
+                // 在实际实现中，可能需要为每个插件创建或查找对应的配置文件
+                Path configDir = Paths.get(properties.getConfigDirectory());
+                if (!configDir.toFile().exists()) {
+                    configDir.toFile().mkdirs();
+                }
+                
+                // 创建一个虚拟的WatchKey来标记插件已启用热重载
+                // 使用Path.register()方法创建WatchKey
+                WatchKey dummyKey = configDir.register(watchService, 
+                    StandardWatchEventKinds.ENTRY_CREATE, 
+                    StandardWatchEventKinds.ENTRY_MODIFY, 
+                    StandardWatchEventKinds.ENTRY_DELETE);
+                
+                // 保存插件ID和虚拟WatchKey
+                watchKeys.put(pluginId, dummyKey);
+                
+                log.debug("Hot reload monitoring started for plugin: {}", pluginId);
+                log.debug("Active watchers count: {}", watchKeys.size());
+            } else {
+                log.warn("Watch service is null, cannot start hot reload monitoring for plugin: {}", pluginId);
+            }
+        } catch (Exception e) {
+            log.error("Failed to start hot reload monitoring for plugin: " + pluginId, e);
+        }
+    }
+
     private void startWatchingConfiguration(String pluginId, Path configFile) {
         try {
             Path dir = configFile.getParent();

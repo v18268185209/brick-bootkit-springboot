@@ -1,8 +1,5 @@
 package com.zqzqq.bootkits.core.config;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,8 +12,6 @@ import java.util.HashSet;
  * @author zqzqq
  * @since 4.1.0
  */
-@Data
-@EqualsAndHashCode
 public class PluginConfiguration {
     
     /**
@@ -63,121 +58,21 @@ public class PluginConfiguration {
      * 是否启用
      */
     private boolean enabled = true;
-    
+
     public PluginConfiguration() {
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
         this.metadata = new PluginConfigurationMetadata();
     }
-    
-    public PluginConfiguration(String pluginId) {
+
+    public PluginConfiguration(String pluginId, String version) {
         this();
         this.pluginId = pluginId;
+        this.version = version;
     }
-    
+
     /**
-     * 获取配置属性
-     */
-    @SuppressWarnings("unchecked")
-    public <T> T getProperty(String key, Class<T> type) {
-        Object value = properties.get(key);
-        if (value == null) {
-            return null;
-        }
-        
-        if (type.isInstance(value)) {
-            return (T) value;
-        }
-        
-        // 类型转换
-        return convertValue(value, type);
-    }
-    
-    /**
-     * 获取配置属性（带默认值）
-     */
-    public <T> T getProperty(String key, T defaultValue, Class<T> type) {
-        T value = getProperty(key, type);
-        return value != null ? value : defaultValue;
-    }
-    
-    /**
-     * 设置配置属性
-     */
-    public void setProperty(String key, Object value) {
-        properties.put(key, value);
-        this.updatedAt = LocalDateTime.now();
-    }
-    
-    /**
-     * 移除配置属性
-     */
-    public Object removeProperty(String key) {
-        Object removed = properties.remove(key);
-        if (removed != null) {
-            this.updatedAt = LocalDateTime.now();
-        }
-        return removed;
-    }
-    
-    /**
-     * 检查属性是否存在
-     */
-    public boolean hasProperty(String key) {
-        return properties.containsKey(key);
-    }
-    
-    /**
-     * 检查配置是否有效
-     */
-    public boolean isValid() {
-        return pluginId != null && !pluginId.trim().isEmpty();
-    }
-    
-    /**
-     * 获取字符串属性
-     */
-    public String getString(String key) {
-        return getProperty(key, String.class);
-    }
-    
-    /**
-     * 获取字符串属性（带默认值）
-     */
-    public String getString(String key, String defaultValue) {
-        return getProperty(key, defaultValue, String.class);
-    }
-    
-    /**
-     * 获取整数属性
-     */
-    public Integer getInteger(String key) {
-        return getProperty(key, Integer.class);
-    }
-    
-    /**
-     * 获取整数属性（带默认值）
-     */
-    public Integer getInteger(String key, Integer defaultValue) {
-        return getProperty(key, defaultValue, Integer.class);
-    }
-    
-    /**
-     * 获取布尔属性
-     */
-    public Boolean getBoolean(String key) {
-        return getProperty(key, Boolean.class);
-    }
-    
-    /**
-     * 获取布尔属性（带默认值）
-     */
-    public Boolean getBoolean(String key, Boolean defaultValue) {
-        return getProperty(key, defaultValue, Boolean.class);
-    }
-    
-    /**
-     * 创建配置副本
+     * 复制配置（创建深度副本）
      */
     public PluginConfiguration copy() {
         PluginConfiguration copy = new PluginConfiguration();
@@ -185,36 +80,12 @@ public class PluginConfiguration {
         copy.version = this.version;
         copy.environment = this.environment;
         copy.properties = new HashMap<>(this.properties);
-        copy.metadata = this.metadata != null ? this.metadata.copy() : null;
+        copy.metadata = this.metadata.copy();
         copy.createdAt = this.createdAt;
-        copy.updatedAt = this.updatedAt;
+        copy.updatedAt = LocalDateTime.now(); // 复制时更新时间为现在
         copy.description = this.description;
         copy.enabled = this.enabled;
         return copy;
-    }
-    
-    @SuppressWarnings("unchecked")
-    private <T> T convertValue(Object value, Class<T> type) {
-        if (value == null) {
-            return null;
-        }
-        
-        String stringValue = value.toString();
-        
-        try {
-            if (type == String.class) {
-                return (T) stringValue;
-            } else if (type == Integer.class || type == int.class) {
-                return (T) Integer.valueOf(stringValue);
-            } else if (type == Boolean.class || type == boolean.class) {
-                return (T) Boolean.valueOf(stringValue);
-            }
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("Cannot convert value '" + stringValue + 
-                    "' to type " + type.getSimpleName(), e);
-        }
-        
-        throw new IllegalArgumentException("Unsupported type: " + type.getSimpleName());
     }
 
     /**
@@ -232,6 +103,41 @@ public class PluginConfiguration {
     }
 
     /**
+     * 获取环境（public方法，确保兼容性）
+     */
+    public String getEnvironment() {
+        return environment;
+    }
+
+    /**
+     * 获取属性集合（public方法，确保兼容性）
+     */
+    public Map<String, Object> getProperties() {
+        return properties;
+    }
+
+    /**
+     * 获取配置元数据（public方法，确保兼容性）
+     */
+    public PluginConfigurationMetadata getMetadata() {
+        return metadata;
+    }
+
+    /**
+     * 获取创建时间（public方法，确保兼容性）
+     */
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    /**
+     * 获取最后更新时间（public方法，确保兼容性）
+     */
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    /**
      * 获取描述（public方法，确保兼容性）
      */
     public String getDescription() {
@@ -243,27 +149,6 @@ public class PluginConfiguration {
      */
     public boolean isEnabled() {
         return enabled;
-    }
-
-    /**
-     * 获取环境（public方法，确保兼容性）
-     */
-    public String getEnvironment() {
-        return environment;
-    }
-
-    /**
-     * 获取配置属性（public方法，确保兼容性）
-     */
-    public Map<String, Object> getProperties() {
-        return properties;
-    }
-
-    /**
-     * 获取配置元数据（public方法，确保兼容性）
-     */
-    public PluginConfigurationMetadata getMetadata() {
-        return metadata;
     }
 
     /**
@@ -279,6 +164,22 @@ public class PluginConfiguration {
      */
     public void setVersion(String version) {
         this.version = version;
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    /**
+     * 设置环境（public方法，确保兼容性）
+     */
+    public void setEnvironment(String environment) {
+        this.environment = environment;
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    /**
+     * 设置配置元数据（public方法，确保兼容性）
+     */
+    public void setMetadata(PluginConfigurationMetadata metadata) {
+        this.metadata = metadata;
         this.updatedAt = LocalDateTime.now();
     }
 
@@ -299,25 +200,166 @@ public class PluginConfiguration {
     }
 
     /**
-     * 设置环境（public方法，确保兼容性）
+     * 设置属性值（public方法，确保兼容性）
      */
-    public void setEnvironment(String environment) {
-        this.environment = environment;
+    public void setProperty(String key, Object value) {
+        properties.put(key, value);
         this.updatedAt = LocalDateTime.now();
     }
 
     /**
-     * 设置配置元数据（public方法，确保兼容性）
+     * 设置属性值（String类型）
      */
-    public void setMetadata(PluginConfigurationMetadata metadata) {
-        this.metadata = metadata;
+    public void setProperty(String key, String value) {
+        properties.put(key, value);
         this.updatedAt = LocalDateTime.now();
+    }
+
+    /**
+     * 设置属性值（int类型）
+     */
+    public void setProperty(String key, int value) {
+        properties.put(key, value);
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    /**
+     * 设置属性值（boolean类型）
+     */
+    public void setProperty(String key, boolean value) {
+        properties.put(key, value);
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    /**
+     * 检查属性是否存在
+     */
+    public boolean hasProperty(String key) {
+        return properties.containsKey(key);
+    }
+
+    /**
+     * 移除属性
+     */
+    public Object removeProperty(String key) {
+        Object removed = properties.remove(key);
+        if (removed != null) {
+            this.updatedAt = LocalDateTime.now();
+        }
+        return removed;
+    }
+
+    /**
+     * 获取String类型属性
+     */
+    public String getString(String key) {
+        Object value = properties.get(key);
+        return value != null ? value.toString() : null;
+    }
+
+    /**
+     * 获取String类型属性（带默认值）
+     */
+    public String getString(String key, String defaultValue) {
+        String value = getString(key);
+        return value != null ? value : defaultValue;
+    }
+
+    /**
+     * 获取Integer类型属性
+     */
+    public Integer getInteger(String key) {
+        Object value = properties.get(key);
+        if (value instanceof Integer) {
+            return (Integer) value;
+        }
+        if (value instanceof String) {
+            try {
+                return Integer.valueOf((String) value);
+            } catch (NumberFormatException e) {
+                return null;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 获取Integer类型属性（带默认值）
+     */
+    public Integer getInteger(String key, int defaultValue) {
+        Integer value = getInteger(key);
+        return value != null ? value : defaultValue;
+    }
+
+    /**
+     * 获取Boolean类型属性
+     */
+    public Boolean getBoolean(String key) {
+        Object value = properties.get(key);
+        if (value instanceof Boolean) {
+            return (Boolean) value;
+        }
+        if (value instanceof String) {
+            return Boolean.valueOf((String) value);
+        }
+        return null;
+    }
+
+    /**
+     * 获取Boolean类型属性（带默认值）
+     */
+    public Boolean getBoolean(String key, boolean defaultValue) {
+        Boolean value = getBoolean(key);
+        return value != null ? value : defaultValue;
+    }
+
+    /**
+     * 获取属性值（public方法，确保兼容性）
+     */
+    public <T> T getProperty(String key, Class<T> type) {
+        Object value = properties.get(key);
+        if (value == null) {
+            return null;
+        }
+        if (type.isInstance(value)) {
+            return type.cast(value);
+        }
+        try {
+            return type.getConstructor(String.class).newInstance(value.toString());
+        } catch (Exception e) {
+            throw new IllegalArgumentException("无法将值 '" + value + "' 转换为类型 " + type.getName(), e);
+        }
+    }
+
+    /**
+     * 获取属性值（带默认值）
+     */
+    public <T> T getProperty(String key, T defaultValue, Class<T> type) {
+        T value = getProperty(key, type);
+        return value != null ? value : defaultValue;
+    }
+
+    
+
+    /**
+     * 检查配置是否有效（public方法，确保兼容性）
+     */
+    public boolean isValid() {
+        return pluginId != null && !pluginId.trim().isEmpty() &&
+               version != null && !version.trim().isEmpty() &&
+               metadata != null;
+    }
+
+    /**
+     * 添加单个参数的构造函数（public方法，确保兼容性）
+     */
+    public PluginConfiguration(String pluginId) {
+        this(pluginId, "1.0.0");
     }
     
     /**
      * 配置元数据
      */
-    @Data
     public static class PluginConfigurationMetadata {
         
         /**
@@ -354,19 +396,12 @@ public class PluginConfiguration {
             copy.tags = new HashMap<>(this.tags);
             return copy;
         }
-
+        
         /**
-         * 获取配置标签（public方法，确保兼容性）
+         * 获取配置来源（public方法，确保兼容性）
          */
-        public Map<String, String> getTags() {
-            return tags;
-        }
-
-        /**
-         * 获取敏感属性列表（public方法，确保兼容性）
-         */
-        public Set<String> getSensitiveProperties() {
-            return sensitiveProperties;
+        public String getSource() {
+            return source;
         }
 
         /**
@@ -377,10 +412,59 @@ public class PluginConfiguration {
         }
 
         /**
+         * 获取配置格式（public方法，确保兼容性）
+         */
+        public String getFormat() {
+            return format;
+        }
+
+        /**
          * 设置配置格式（public方法，确保兼容性）
          */
         public void setFormat(String format) {
             this.format = format;
+        }
+
+        /**
+         * 获取配置校验规则（public方法，确保兼容性）
+         */
+        public Map<String, String> getValidationRules() {
+            return validationRules;
+        }
+
+        /**
+         * 设置配置校验规则（public方法，确保兼容性）
+         */
+        public void setValidationRules(Map<String, String> validationRules) {
+            this.validationRules = validationRules;
+        }
+
+        /**
+         * 获取敏感属性列表（public方法，确保兼容性）
+         */
+        public Set<String> getSensitiveProperties() {
+            return sensitiveProperties;
+        }
+
+        /**
+         * 设置敏感属性列表（public方法，确保兼容性）
+         */
+        public void setSensitiveProperties(Set<String> sensitiveProperties) {
+            this.sensitiveProperties = sensitiveProperties;
+        }
+
+        /**
+         * 获取配置标签（public方法，确保兼容性）
+         */
+        public Map<String, String> getTags() {
+            return tags;
+        }
+
+        /**
+         * 设置配置标签（public方法，确保兼容性）
+         */
+        public void setTags(Map<String, String> tags) {
+            this.tags = tags;
         }
     }
 }

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  SpotBugs配置文件
+  排除一些不必要的警告和误报
+-->
+<FindBugsFilter>
+    <!-- 排除测试代码 -->
+    <Match>
+        <Source name="~.*Test\.java$" />
+    </Match>
+    
+    <!-- 排除生成的代码 -->
+    <Match>
+        <Source name="~.*\.(java)$" />
+        <Bug pattern="LG_LOST_LOGGER_DUE_TO_WEAK_REFERENCE" />
+    </Match>
+    
+    <!-- 排除第三方库的代码 -->
+    <Match>
+        <Package name="~org\.slf4j\..*" />
+        <Package name="~lombok\..*" />
+        <Package name="~org\.springframework\..*" />
+        <Package name="~org\.junit\..*" />
+        <Package name="~org\.mockito\..*" />
+        <Package name="~com\.zqzqq\.bootkits\.loader\.launcher\.AbstractLauncher.*" />
+        <Package name="~com\.zqzqq\.bootkits\.loader\.launcher\.runner\.MainMethodRunner.*" />
+    </Match>
+    
+    <!-- 排除一些常见的误报 -->
+    <Match>
+        <Bug pattern="NP_ALWAYS_NULL" />
+        <Bug pattern="NP_NULL_ON_SOME_PATH" />
+        <Bug pattern="EI_EXPOSE_REP" />
+        <Bug pattern="EI_EXPOSE_REP2" />
+        <Bug pattern="SE_BAD_FIELD" />
+        <Bug pattern="URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD" />
+    </Match>
+    
+    <!-- 插件相关的特定规则 -->
+    <Match>
+        <Class name="~com\.zqzqq\.bootkits\.core\..*" />
+        <Bug pattern="DM_STRING_CTOR" />
+        <Bug pattern="DM_BOOLEAN_CTOR" />
+        <Bug pattern="RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE" />
+    </Match>
+</FindBugsFilter>

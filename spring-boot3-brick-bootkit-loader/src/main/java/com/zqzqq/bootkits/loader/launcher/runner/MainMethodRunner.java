@@ -33,4 +33,13 @@ public class MainMethodRunner extends MethodRunner{
     protected Object getInstance(Class<?> mainClass) throws Exception {
         return null;
     }
+
+    @Override
+    public String toString() {
+        return "MainMethodRunner{" +
+                "mainClass='" + getMainClass() + '\'' +
+                ", mainRunMethod='" + getMainRunMethod() + '\'' +
+                ", args=" + java.util.Arrays.toString(getArgs()) +
+                '}';
+    }
 }

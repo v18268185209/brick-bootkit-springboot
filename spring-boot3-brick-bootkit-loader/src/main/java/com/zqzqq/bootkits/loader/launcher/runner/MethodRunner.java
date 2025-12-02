@@ -113,5 +113,61 @@ public class MethodRunner {
         return false;
     }
 
+    /**
+     * 获取主类名
+     * 
+     * @return 主类名
+     */
+    public String getMainClass() {
+        return className;
+    }
+
+    /**
+     * 获取主运行方法名
+     * 
+     * @return 主运行方法名
+     */
+    public String getMainRunMethod() {
+        return runMethodName;
+    }
+
+    /**
+     * 获取参数数组
+     * 
+     * @return 参数数组
+     */
+    public String[] getArgs() {
+        return args;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        
+        MethodRunner that = (MethodRunner) obj;
+        return Objects.equals(className, that.className) &&
+               Objects.equals(runMethodName, that.runMethodName) &&
+               Objects.deepEquals(args, that.args);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(className, runMethodName);
+        if (args != null) {
+            result = result * 31 + java.util.Arrays.hashCode(args);
+        }
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "MethodRunner{" +
+                "mainClass='" + className + '\'' +
+                ", mainRunMethod='" + runMethodName + '\'' +
+                ", args=" + java.util.Arrays.toString(args) +
+                '}';
+    }
+
 }
 

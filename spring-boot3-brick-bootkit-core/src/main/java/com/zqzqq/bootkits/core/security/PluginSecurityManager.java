@@ -46,7 +46,6 @@ public class PluginSecurityManager {
     public PluginSecurityManager(PluginSecurityConfiguration configuration) {
         this.configuration = configuration;
         this.codeScanner = new PluginCodeScanner(configuration);
-        initializeDefaultPolicies();
     }
 
     /**
@@ -91,6 +90,7 @@ public class PluginSecurityManager {
             logger.error("插件安全验证失败: " + pluginId, e);
             PluginSecurityValidationResult errorResult = new PluginSecurityValidationResult(pluginId);
             errorResult.addViolation("插件安全验证失败: " + e.getMessage());
+            errorResult.setValid(false);
             return errorResult;
         }
     }
@@ -202,18 +202,22 @@ public class PluginSecurityManager {
         return new HashSet<>(pluginPermissions.getOrDefault(pluginId, Collections.emptySet()));
     }
 
-    private void initializeDefaultPolicies() {
-        // 初始化默认安全策略
-        PluginSecurityPolicy defaultPolicy = PluginSecurityPolicy.builder()
-                .allowFileSystemAccess(false)
-                .allowNetworkAccess(false)
-                .allowSystemPropertyAccess(false)
-                .allowReflectionAccess(true)
-                .maxMemoryUsage(configuration.getDefaultMaxMemoryUsage())
-                .maxThreadCount(configuration.getDefaultMaxThreadCount())
-                .build();
-        
-        securityPolicies.put("default", defaultPolicy);
+    /**
+     * 获取默认安全策略（延迟初始化）
+     */
+    private PluginSecurityPolicy getDefaultPolicy() {
+        return securityPolicies.computeIfAbsent("default", k -> {
+            // 创建默认安全策略
+            PluginSecurityPolicy defaultPolicy = PluginSecurityPolicy.builder()
+                    .allowFileSystemAccess(false)
+                    .allowNetworkAccess(false)
+                    .allowSystemPropertyAccess(false)
+                    .allowReflectionAccess(true)
+                    .maxMemoryUsage(configuration.getDefaultMaxMemoryUsage())
+                    .maxThreadCount(configuration.getDefaultMaxThreadCount())
+                    .build();
+            return defaultPolicy;
+        });
     }
 
     private void validatePluginPermissions(String pluginId, PluginSecurityValidationResult result) {
@@ -261,7 +265,7 @@ public class PluginSecurityManager {
     }
 
     private PluginSecurityPolicy getDefaultSecurityPolicy() {
-        return securityPolicies.get("default");
+        return getDefaultPolicy();
     }
 
     private void notifySecurityValidation(PluginSecurityValidationResult result) {
