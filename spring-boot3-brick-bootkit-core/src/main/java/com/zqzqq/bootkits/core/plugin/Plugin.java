@@ -45,4 +45,9 @@ public interface Plugin {
      * 检查插件是否正在运行
      */
     boolean isRunning();
+    
+    /**
+     * 获取插件的类加载器
+     */
+    ClassLoader getClassLoader();
 }

@@ -12,6 +12,8 @@ import com.zqzqq.bootkits.core.health.PluginAutoRecoveryManager;
 import com.zqzqq.bootkits.core.version.PluginVersionInfo;
 import com.zqzqq.bootkits.core.version.VersionUtils;
 import com.zqzqq.bootkits.core.dependency.*;
+import com.zqzqq.bootkits.core.isolation.*;
+import com.zqzqq.bootkits.core.performance.*;
 
 import java.io.File;
 import java.util.*;
@@ -39,6 +41,13 @@ public class PluginManager {
     // 新增的依赖管理系统
     private final PluginDependencyManager dependencyManager;
     
+    // 新增的资源隔离管理系统
+    private final PluginResourceIsolation resourceIsolation;
+    private final PluginResourceMonitor resourceMonitor;
+    
+    // 新增的性能分析系统
+    private final PluginPerformanceAnalyzer performanceAnalyzer;
+    
     // 已安装的插件
     private final ConcurrentHashMap<String, Plugin> installedPlugins = new ConcurrentHashMap<>();
     
@@ -46,18 +55,30 @@ public class PluginManager {
     private final ConcurrentHashMap<String, Plugin> runningPlugins = new ConcurrentHashMap<>();
 
     public PluginManager(PluginLoader pluginLoader, PluginValidator pluginValidator) {
-        this(pluginLoader, pluginValidator, null, null, null);
+        this(pluginLoader, pluginValidator, null, null, null, null, null);
     }
     
     public PluginManager(PluginLoader pluginLoader, PluginValidator pluginValidator,
                         PluginHealthChecker healthChecker,
                         PluginAutoRecoveryManager autoRecoveryManager,
                         PluginDependencyManager dependencyManager) {
+        this(pluginLoader, pluginValidator, healthChecker, autoRecoveryManager, dependencyManager, null, null);
+    }
+    
+    public PluginManager(PluginLoader pluginLoader, PluginValidator pluginValidator,
+                        PluginHealthChecker healthChecker,
+                        PluginAutoRecoveryManager autoRecoveryManager,
+                        PluginDependencyManager dependencyManager,
+                        PluginResourceIsolation resourceIsolation,
+                        PluginPerformanceAnalyzer performanceAnalyzer) {
         this.pluginLoader = pluginLoader;
         this.pluginValidator = pluginValidator;
         this.healthChecker = healthChecker;
         this.autoRecoveryManager = autoRecoveryManager;
         this.dependencyManager = dependencyManager;
+        this.resourceIsolation = resourceIsolation;
+        this.resourceMonitor = resourceIsolation != null ? resourceIsolation.getResourceMonitor() : null;
+        this.performanceAnalyzer = performanceAnalyzer;
     }
 
     /**
@@ -102,6 +123,16 @@ public class PluginManager {
             
             // 安装插件
             installedPlugins.put(plugin.getId(), plugin);
+            
+            // 初始化资源隔离（如果支持）
+            if (resourceIsolation != null) {
+                try {
+                    resourceIsolation.initializePlugin(plugin.getId(), plugin.getClassLoader());
+                    logger.debug(plugin.getId(), "resource-isolation", "插件资源隔离初始化完成");
+                } catch (Exception e) {
+                    logger.warn(plugin.getId(), "resource-isolation", "插件资源隔离初始化失败: {}", e.getMessage());
+                }
+            }
             
             logger.info("插件安装成功: {} ({})", plugin.getName(), plugin.getId());
             return plugin;
@@ -156,6 +187,26 @@ public class PluginManager {
                 // 不需要显式注册，健康检查器会自动监控运行中的插件
             }
             
+            // 启动资源监控和性能分析
+            if (resourceMonitor != null) {
+                PluginResourceUsage usage = resourceIsolation != null ? 
+                    resourceIsolation.getPluginResourceUsage(pluginId) : null;
+                if (usage != null) {
+                    resourceMonitor.startMonitoring(pluginId, usage);
+                }
+            }
+            
+            // 记录性能分析基线
+            if (performanceAnalyzer != null) {
+                PluginResourceUsage usage = resourceMonitor != null ? 
+                    resourceMonitor.getPluginResourceUsage(pluginId) : null;
+                if (usage != null) {
+                    PerformanceAnalysis analysis = performanceAnalyzer.analyzePlugin(pluginId, usage);
+                    // 可以在这里保存基线数据
+                    logger.debug(pluginId, "performance-analysis", "插件性能分析完成: 评分 {:.2f}", analysis.getPerformanceScore());
+                }
+            }
+            
             logger.info("插件启动成功: {}", pluginId);
             
         } catch (Exception e) {
@@ -189,6 +240,12 @@ public class PluginManager {
         try {
             plugin.stop();
             runningPlugins.remove(pluginId);
+            
+            // 停止资源监控
+            if (resourceMonitor != null) {
+                resourceMonitor.stopMonitoring(pluginId);
+            }
+            
             logger.info("插件停止成功: {}", pluginId);
             
         } catch (Exception e) {
@@ -221,6 +278,27 @@ public class PluginManager {
         try {
             plugin.uninstall();
             installedPlugins.remove(pluginId);
+            
+            // 清理资源隔离
+            if (resourceIsolation != null) {
+                try {
+                    resourceIsolation.cleanupPlugin(pluginId);
+                    logger.debug(pluginId, "resource-isolation", "插件资源隔离清理完成");
+                } catch (Exception e) {
+                    logger.warn(pluginId, "resource-isolation", "插件资源隔离清理失败: {}", e.getMessage());
+                }
+            }
+            
+            // 清理性能分析数据
+            if (performanceAnalyzer != null) {
+                try {
+                    performanceAnalyzer.clearPluginHistory(pluginId);
+                    logger.debug(pluginId, "performance-analysis", "插件性能分析数据清理完成");
+                } catch (Exception e) {
+                    logger.warn(pluginId, "performance-analysis", "插件性能分析数据清理失败: {}", e.getMessage());
+                }
+            }
+            
             logger.info("插件卸载成功: {}", pluginId);
             
         } catch (Exception e) {
@@ -290,6 +368,16 @@ public class PluginManager {
             // 关闭自动恢复管理器
             if (autoRecoveryManager != null) {
                 autoRecoveryManager.shutdown();
+            }
+            
+            // 关闭资源监控
+            if (resourceMonitor != null) {
+                resourceMonitor.shutdown();
+            }
+            
+            // 关闭资源隔离系统
+            if (resourceIsolation != null) {
+                // 资源隔离系统会在resourceMonitor.shutdown()中自动关闭
             }
             
             // 停止所有运行中的插件
@@ -550,5 +638,190 @@ public class PluginManager {
      */
     public int getDependencyInfoCount() {
         return dependencyManager != null ? dependencyManager.getRegisteredPluginCount() : 0;
+    }
+    
+    // ===== 第二阶段：资源隔离与配额管理功能 =====
+    
+    /**
+     * 设置插件资源配额
+     */
+    public void setPluginResourceQuota(String pluginId, ResourceQuota quota) {
+        if (resourceIsolation == null) {
+            throw new IllegalStateException("资源隔离系统未初始化");
+        }
+        
+        Plugin plugin = installedPlugins.get(pluginId);
+        if (plugin == null) {
+            throw new IllegalArgumentException("插件不存在: " + pluginId);
+        }
+        
+        resourceIsolation.setPluginQuota(pluginId, quota);
+        logger.info(pluginId, "resource-quota", "设置插件资源配额: {}", quota.toString());
+    }
+    
+    /**
+     * 获取插件资源配额
+     */
+    public ResourceQuota getPluginResourceQuota(String pluginId) {
+        if (resourceIsolation == null) {
+            return null;
+        }
+        
+        return resourceIsolation.getPluginQuota(pluginId);
+    }
+    
+    /**
+     * 获取插件资源使用情况
+     */
+    public PluginResourceUsage getPluginResourceUsage(String pluginId) {
+        if (resourceMonitor == null) {
+            return null;
+        }
+        
+        return resourceMonitor.getPluginResourceUsage(pluginId);
+    }
+    
+    /**
+     * 检查插件是否超过资源配额
+     */
+    public boolean isPluginQuotaExceeded(String pluginId) {
+        PluginResourceUsage usage = getPluginResourceUsage(pluginId);
+        return usage != null && usage.isQuotaExceeded();
+    }
+    
+    /**
+     * 获取所有插件资源使用摘要
+     */
+    public PluginResourceMonitor.PluginResourceSummary getAllPluginsResourceSummary() {
+        if (resourceMonitor == null) {
+            return new PluginResourceMonitor.PluginResourceSummary(0, 0, 0, 0);
+        }
+        
+        return resourceMonitor.getResourceSummary();
+    }
+    
+    /**
+     * 获取系统资源信息
+     */
+    public SystemResourceInfo getSystemResourceInfo() {
+        if (resourceIsolation == null) {
+            return null;
+        }
+        
+        return resourceIsolation.getSystemResourceInfo();
+    }
+    
+    /**
+     * 强制停止插件（当资源配额严重超限时）
+     */
+    public void forceStopPlugin(String pluginId) {
+        logger.warn("system", "强制停止插件（资源配额超限）", pluginId);
+        stopPlugin(pluginId);
+        
+        if (resourceIsolation != null) {
+            resourceIsolation.isolatePlugin(pluginId);
+        }
+    }
+    
+    // ===== 第二阶段：性能分析与优化建议功能 =====
+    
+    /**
+     * 分析插件性能
+     */
+    public PerformanceAnalysis analyzePluginPerformance(String pluginId) {
+        if (performanceAnalyzer == null) {
+            throw new IllegalStateException("性能分析系统未初始化");
+        }
+        
+        Plugin plugin = runningPlugins.get(pluginId);
+        if (plugin == null) {
+            throw new IllegalArgumentException("插件未运行: " + pluginId);
+        }
+        
+        PluginResourceUsage usage = getPluginResourceUsage(pluginId);
+        if (usage == null) {
+            throw new IllegalStateException("无法获取插件资源使用情况: " + pluginId);
+        }
+        
+        return performanceAnalyzer.analyzePlugin(pluginId, usage);
+    }
+    
+    /**
+     * 获取插件性能历史
+     */
+    public List<PerformanceSnapshot> getPluginPerformanceHistory(String pluginId, int limit) {
+        if (performanceAnalyzer == null) {
+            return new ArrayList<>();
+        }
+        
+        return performanceAnalyzer.getPerformanceHistory(pluginId, limit);
+    }
+    
+    /**
+     * 设置插件性能基线
+     */
+    public void setPluginPerformanceBaseline(String pluginId, PerformanceBaseline baseline) {
+        if (performanceAnalyzer == null) {
+            throw new IllegalStateException("性能分析系统未初始化");
+        }
+        
+        performanceAnalyzer.setPerformanceBaseline(pluginId, baseline);
+        logger.info("设置插件性能基线: {}", pluginId);
+    }
+    
+    /**
+     * 获取插件性能基线
+     */
+    public PerformanceBaseline getPluginPerformanceBaseline(String pluginId) {
+        if (performanceAnalyzer == null) {
+            return null;
+        }
+        
+        return performanceAnalyzer.getPerformanceBaseline(pluginId);
+    }
+    
+    /**
+     * 对比插件性能与基线
+     */
+    public PerformanceComparison comparePluginWithBaseline(String pluginId) {
+        if (performanceAnalyzer == null) {
+            return null;
+        }
+        
+        PerformanceAnalysis current = analyzePluginPerformance(pluginId);
+        return performanceAnalyzer.compareWithBaseline(pluginId, current);
+    }
+    
+    /**
+     * 获取所有插件性能评分
+     */
+    public Map<String, Double> getAllPluginsPerformanceScores() {
+        if (performanceAnalyzer == null) {
+            return new HashMap<>();
+        }
+        
+        return performanceAnalyzer.getAllPluginPerformanceScores();
+    }
+    
+    /**
+     * 清理插件性能历史数据
+     */
+    public void clearPluginPerformanceHistory(String pluginId) {
+        if (performanceAnalyzer != null) {
+            performanceAnalyzer.clearPluginHistory(pluginId);
+            logger.info("清理插件性能历史数据: {}", pluginId);
+        }
+    }
+    
+    /**
+     * 获取性能阈值配置
+     */
+    public PerformanceThresholds getPerformanceThresholds() {
+        if (performanceAnalyzer == null) {
+            return null;
+        }
+        
+        // Note: 这里需要从analyzer中暴露thresholds，暂时返回默认值
+        return PerformanceThresholds.defaultThresholds();
     }
 }
