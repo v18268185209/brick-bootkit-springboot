@@ -145,7 +145,7 @@
 <dependency>
 <groupId>com.zqzqq</groupId>
 <artifactId>spring-boot3-brick-bootkit</artifactId>
-<version>4.0.0</version>
+<version>4.0.1</version>
 </dependency>
 
 ```
@@ -156,7 +156,7 @@
 <dependency>
 <groupId>com.zqzqq</groupId>
 <artifactId>spring-boot3-brick-bootkit-maven-packager</artifactId>
-<version>4.0.0</version>
+<version>4.0.1</version>
 </dependency>
 
 ```
