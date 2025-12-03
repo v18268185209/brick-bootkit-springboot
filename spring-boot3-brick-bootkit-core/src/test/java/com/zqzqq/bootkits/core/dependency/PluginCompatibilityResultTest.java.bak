@@ -1,0 +1,356 @@
+package com.zqzqq.bootkits.core.dependency;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+/**
+ * 插件兼容性结果测试
+ */
+@DisplayName("PluginCompatibilityResult Test")
+class PluginCompatibilityResultTest {
+
+    @Test
+    @DisplayName("测试创建兼容结果")
+    void testCreateCompatibleResult() {
+        List<String> warnings = Arrays.asList("Minor version mismatch");
+
+        PluginCompatibilityResult result = PluginCompatibilityResult.compatible(warnings);
+
+        assertThat(result.isCompatible()).isTrue();
+        assertThat(result.getErrors()).isEmpty();
+        assertThat(result.getWarnings()).isEqualTo(warnings);
+    }
+
+    @Test
+    @DisplayName("测试创建兼容但有警告的结果")
+    void testCreateCompatibleWithWarnings() {
+        List<String> warnings = Arrays.asList(
+            "Plugin version is outdated",
+            "Consider upgrading dependencies"
+        );
+
+        PluginCompatibilityResult result = PluginCompatibilityResult.compatibleWithWarnings(warnings);
+
+        assertThat(result.isCompatible()).isTrue();
+        assertThat(result.getErrors()).isEmpty();
+        assertThat(result.getWarnings()).isEqualTo(warnings);
+    }
+
+    @Test
+    @DisplayName("测试创建不兼容结果")
+    void testCreateIncompatibleResult() {
+        List<String> errors = Arrays.asList(
+            "Version conflict detected",
+            "Missing required dependency"
+        );
+
+        PluginCompatibilityResult result = PluginCompatibilityResult.incompatible(errors);
+
+        assertThat(result.isCompatible()).isFalse();
+        assertThat(result.getErrors()).isEqualTo(errors);
+        assertThat(result.getWarnings()).isEmpty();
+    }
+
+    @Test
+    @DisplayName("测试创建不兼容但有警告的结果")
+    void testCreateIncompatibleWithWarnings() {
+        List<String> errors = Arrays.asList("Critical version conflict");
+        List<String> warnings = Arrays.asList("Minor compatibility warning");
+
+        PluginCompatibilityResult result = PluginCompatibilityResult.incompatibleWithWarnings(errors, warnings);
+
+        assertThat(result.isCompatible()).isFalse();
+        assertThat(result.getErrors()).isEqualTo(errors);
+        assertThat(result.getWarnings()).isEqualTo(warnings);
+    }
+
+    @Test
+    @DisplayName("测试静态工厂方法")
+    void testStaticFactoryMethods() {
+        // 测试 compatible 方法
+        PluginCompatibilityResult result1 = PluginCompatibilityResult.compatible();
+        assertThat(result1.isCompatible()).isTrue();
+        assertThat(result1.getErrors()).isEmpty();
+
+        PluginCompatibilityResult result2 = PluginCompatibilityResult.compatible(Arrays.asList("warning"));
+        assertThat(result2.isCompatible()).isTrue();
+        assertThat(result2.getWarnings()).containsExactly("warning");
+
+        // 测试 incompatible 方法
+        PluginCompatibilityResult result3 = PluginCompatibilityResult.incompatible();
+        assertThat(result3.isCompatible()).isFalse();
+        assertThat(result3.getErrors()).isEmpty();
+
+        PluginCompatibilityResult result4 = PluginCompatibilityResult.incompatible(Arrays.asList("error"));
+        assertThat(result4.isCompatible()).isFalse();
+        assertThat(result4.getErrors()).containsExactly("error");
+    }
+
+    @Test
+    @DisplayName("测试空参数处理")
+    void testNullParameterHandling() {
+        // 测试null警告列表
+        PluginCompatibilityResult result1 = PluginCompatibilityResult.compatible(null);
+        assertThat(result1.getWarnings()).isEmpty();
+
+        // 测试null错误列表
+        PluginCompatibilityResult result2 = PluginCompatibilityResult.incompatible(null);
+        assertThat(result2.getErrors()).isEmpty();
+
+        // 测试null错误和警告列表
+        PluginCompatibilityResult result3 = PluginCompatibilityResult.incompatibleWithWarnings(null, null);
+        assertThat(result3.getErrors()).isEmpty();
+        assertThat(result3.getWarnings()).isEmpty();
+    }
+
+    @Test
+    @DisplayName("测试不可变集合")
+    void testUnmodifiableCollections() {
+        List<String> errors = Arrays.asList("error1", "error2");
+        List<String> warnings = Arrays.asList("warning1", "warning2");
+
+        PluginCompatibilityResult result = PluginCompatibilityResult.incompatibleWithWarnings(errors, warnings);
+
+        // 尝试修改返回的集合应该失败
+        assertThatThrownBy(() -> result.getErrors().add("new-error"))
+            .isInstanceOf(UnsupportedOperationException.class);
+
+        assertThatThrownBy(() -> result.getWarnings().add("new-warning"))
+            .isInstanceOf(UnsupportedOperationException.class);
+    }
+
+    @Test
+    @DisplayName("测试复杂兼容性场景")
+    void testComplexCompatibilityScenarios() {
+        // 场景1: 完全兼容
+        PluginCompatibilityResult fullyCompatible = PluginCompatibilityResult.compatible();
+        assertThat(fullyCompatible.isCompatible()).isTrue();
+        assertThat(fullyCompatible.hasErrors()).isFalse();
+        assertThat(fullyCompatible.hasWarnings()).isFalse();
+
+        // 场景2: 兼容但有警告
+        List<String> minorWarnings = Arrays.asList(
+            "Plugin uses deprecated API",
+            "Version is one minor release behind"
+        );
+        PluginCompatibilityResult compatibleWithWarnings = PluginCompatibilityResult.compatibleWithWarnings(minorWarnings);
+        assertThat(compatibleWithWarnings.isCompatible()).isTrue();
+        assertThat(compatibleWithWarnings.hasErrors()).isFalse();
+        assertThat(compatibleWithWarnings.hasWarnings()).isTrue();
+        assertThat(compatibleWithWarnings.getWarnings()).hasSize(2);
+
+        // 场景3: 不兼容
+        List<String> criticalErrors = Arrays.asList(
+            "Major version mismatch",
+            "Incompatible dependency versions"
+        );
+        PluginCompatibilityResult incompatible = PluginCompatibilityResult.incompatible(criticalErrors);
+        assertThat(incompatible.isCompatible()).isFalse();
+        assertThat(incompatible.hasErrors()).isTrue();
+        assertThat(incompatible.hasWarnings()).isFalse();
+        assertThat(incompatible.getErrors()).hasSize(2);
+
+        // 场景4: 不兼容但有额外警告
+        List<String> additionalWarnings = Arrays.asList("Some additional context");
+        PluginCompatibilityResult incompatibleWithWarnings = PluginCompatibilityResult.incompatibleWithWarnings(criticalErrors, additionalWarnings);
+        assertThat(incompatibleWithWarnings.isCompatible()).isFalse();
+        assertThat(incompatibleWithWarnings.hasErrors()).isTrue();
+        assertThat(incompatibleWithWarnings.hasWarnings()).isTrue();
+        assertThat(incompatibleWithWarnings.getErrors()).hasSize(2);
+        assertThat(incompatibleWithWarnings.getWarnings()).hasSize(1);
+    }
+
+    @Test
+    @DisplayName("测试兼容性结果的一致性")
+    void testCompatibilityResultConsistency() {
+        PluginCompatibilityResult compatible = PluginCompatibilityResult.compatible();
+        PluginCompatibilityResult incompatible = PluginCompatibilityResult.incompatible();
+
+        // 验证兼容结果的一致性
+        assertThat(compatible.isCompatible()).isTrue();
+        assertThat(compatible.hasErrors()).isFalse();
+        assertThat(compatible.hasWarnings()).isFalse();
+
+        // 验证不兼容结果的一致性
+        assertThat(incompatible.isCompatible()).isFalse();
+        assertThat(incompatible.hasErrors()).isFalse(); // 空错误列表
+        assertThat(incompatible.hasWarnings()).isFalse();
+    }
+
+    @Test
+    @DisplayName("测试大量错误和警告处理")
+    void testLargeNumberOfErrorsAndWarnings() {
+        // 测试大量错误
+        List<String> manyErrors = new ArrayList<>();
+        for (int i = 0; i < 1000; i++) {
+            manyErrors.add("Error " + i);
+        }
+
+        PluginCompatibilityResult resultWithManyErrors = PluginCompatibilityResult.incompatible(manyErrors);
+        assertThat(resultWithManyErrors.isCompatible()).isFalse();
+        assertThat(resultWithManyErrors.getErrors()).hasSize(1000);
+        assertThat(resultWithManyErrors.getErrors().get(0)).isEqualTo("Error 0");
+        assertThat(resultWithManyErrors.getErrors().get(999)).isEqualTo("Error 999");
+
+        // 测试大量警告
+        List<String> manyWarnings = new ArrayList<>();
+        for (int i = 0; i < 500; i++) {
+            manyWarnings.add("Warning " + i);
+        }
+
+        PluginCompatibilityResult resultWithManyWarnings = PluginCompatibilityResult.compatibleWithWarnings(manyWarnings);
+        assertThat(resultWithManyWarnings.isCompatible()).isTrue();
+        assertThat(resultWithManyWarnings.getWarnings()).hasSize(500);
+        assertThat(resultWithManyWarnings.getWarnings().get(0)).isEqualTo("Warning 0");
+        assertThat(resultWithManyWarnings.getWarnings().get(499)).isEqualTo("Warning 499");
+    }
+
+    @Test
+    @DisplayName("测试兼容性结果的复制")
+    void testCompatibilityResultCopying() {
+        List<String> originalErrors = Arrays.asList("error1", "error2");
+        List<String> originalWarnings = Arrays.asList("warning1", "warning2");
+
+        PluginCompatibilityResult original = PluginCompatibilityResult.incompatibleWithWarnings(originalErrors, originalWarnings);
+
+        // 创建副本
+        List<String> copiedErrors = new ArrayList<>(original.getErrors());
+        List<String> copiedWarnings = new ArrayList<>(original.getWarnings());
+
+        // 修改副本不影响原始对象
+        copiedErrors.add("error3");
+        copiedWarnings.add("warning3");
+
+        assertThat(original.getErrors()).hasSize(2);
+        assertThat(original.getWarnings()).hasSize(2);
+        assertThat(copiedErrors).hasSize(3);
+        assertThat(copiedWarnings).hasSize(3);
+    }
+
+    @Test
+    @DisplayName("测试兼容性结果的迭代")
+    void testCompatibilityResultIteration() {
+        List<String> errors = Arrays.asList("error1", "error2", "error3");
+        List<String> warnings = Arrays.asList("warning1", "warning2");
+
+        PluginCompatibilityResult result = PluginCompatibilityResult.incompatibleWithWarnings(errors, warnings);
+
+        // 测试迭代错误列表
+        int errorCount = 0;
+        for (String error : result.getErrors()) {
+            assertThat(error).isNotNull();
+            errorCount++;
+        }
+        assertThat(errorCount).isEqualTo(3);
+
+        // 测试迭代警告列表
+        int warningCount = 0;
+        for (String warning : result.getWarnings()) {
+            assertThat(warning).isNotNull();
+            warningCount++;
+        }
+        assertThat(warningCount).isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("测试特殊字符和Unicode处理")
+    void testSpecialCharactersAndUnicodeHandling() {
+        List<String> errorsWithSpecialChars = Arrays.asList(
+            "错误: 版本冲突",
+            "Error: 版本冲突",
+            "Plugin with émojis 🚀",
+            "Unicode: ñáéíóú",
+            "Special chars: !@#$%^&*()"
+        );
+
+        PluginCompatibilityResult result = PluginCompatibilityResult.incompatible(errorsWithSpecialChars);
+
+        assertThat(result.isCompatible()).isFalse();
+        assertThat(result.getErrors()).hasSize(5);
+        assertThat(result.getErrors().get(0)).isEqualTo("错误: 版本冲突");
+        assertThat(result.getErrors().get(2)).isEqualTo("Plugin with émojis 🚀");
+    }
+
+    @Test
+    @DisplayName("测试兼容性结果的线程安全")
+    void testCompatibilityResultThreadSafety() throws InterruptedException {
+        PluginCompatibilityResult result = PluginCompatibilityResult.compatibleWithWarnings(Arrays.asList("warning"));
+
+        int threadCount = 10;
+        Thread[] threads = new Thread[threadCount];
+        boolean[] readsSuccessful = new boolean[threadCount];
+
+        for (int i = 0; i < threadCount; i++) {
+            final int index = i;
+            threads[i] = new Thread(() -> {
+                try {
+                    // 多次读取结果，应该始终成功
+                    boolean compatible = result.isCompatible();
+                    List<String> errors = result.getErrors();
+                    List<String> warnings = result.getWarnings();
+                    boolean hasErrors = result.hasErrors();
+                    boolean hasWarnings = result.hasWarnings();
+                    
+                    readsSuccessful[index] = true;
+                } catch (Exception e) {
+                    readsSuccessful[index] = false;
+                }
+            });
+            threads[i].start();
+        }
+
+        for (Thread thread : threads) {
+            thread.join();
+        }
+
+        // 验证所有线程都能成功读取
+        for (boolean success : readsSuccessful) {
+            assertThat(success).isTrue();
+        }
+    }
+
+    @Test
+    @DisplayName("测试兼容性结果的边界条件")
+    void testCompatibilityResultBoundaryConditions() {
+        // 测试空字符串错误和警告
+        List<String> emptyStringErrors = Arrays.asList("");
+        List<String> emptyStringWarnings = Arrays.asList("");
+
+        PluginCompatibilityResult result1 = PluginCompatibilityResult.incompatibleWithWarnings(emptyStringErrors, emptyStringWarnings);
+        assertThat(result1.isCompatible()).isFalse();
+        assertThat(result1.getErrors()).containsExactly("");
+        assertThat(result1.getWarnings()).containsExactly("");
+
+        // 测试只包含空白字符的消息
+        List<String> whitespaceMessages = Arrays.asList("   ", "\t\n");
+        PluginCompatibilityResult result2 = PluginCompatibilityResult.incompatible(whitespaceMessages);
+        assertThat(result2.isCompatible()).isFalse();
+        assertThat(result2.getErrors()).hasSize(2);
+    }
+
+    @Test
+    @DisplayName("测试兼容性结果的内存效率")
+    void testCompatibilityResultMemoryEfficiency() {
+        // 测试大量数据时的内存使用
+        List<String> largeErrors = new ArrayList<>();
+        for (int i = 0; i < 10000; i++) {
+            largeErrors.add("Error message " + i);
+        }
+
+        PluginCompatibilityResult result = PluginCompatibilityResult.incompatible(largeErrors);
+
+        // 验证引用而不是副本（如果实现正确）
+        assertThat(result.getErrors()).isEqualTo(largeErrors);
+
+        // 验证集合是不可变的
+        assertThatThrownBy(() -> result.getErrors().clear())
+            .isInstanceOf(UnsupportedOperationException.class);
+    }
+}
