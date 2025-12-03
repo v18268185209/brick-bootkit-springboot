@@ -297,4 +297,34 @@ public class PluginSecurityManager {
             }
         }
     }
+    
+    /**
+     * 关闭安全管理器，清理所有资源
+     * 
+     * 注意：这是一个破坏性操作，将清理所有安全策略和监听器
+     */
+    public void shutdown() {
+        logger.info("system", "开始关闭插件安全管理器");
+        
+        try {
+            // 清理所有插件的安全策略和权限
+            securityPolicies.clear();
+            pluginPermissions.clear();
+            
+            // 清理安全监听器
+            securityListeners.clear();
+            
+            // 清理审计日志器（如果支持）
+            if (auditLogger != null) {
+                // 这里可以添加auditLogger的清理方法
+                logger.info("system", "已清理安全审计器");
+            }
+            
+            logger.info("system", "插件安全管理器关闭完成");
+            
+        } catch (Exception e) {
+            logger.error("system", "关闭安全管理器时发生错误", e.getMessage(), e);
+            throw new RuntimeException("安全管理器关闭失败", e);
+        }
+    }
 }

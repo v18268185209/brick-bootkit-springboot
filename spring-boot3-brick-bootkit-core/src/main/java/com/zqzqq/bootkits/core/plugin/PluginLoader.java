@@ -232,4 +232,31 @@ public class PluginLoader {
         public String getMainClass() { return mainClass; }
         public String getDescription() { return description; }
     }
+    
+    /**
+     * 关闭插件加载器，清理所有类加载器
+     * 
+     * 注意：这是一个破坏性操作，将关闭所有已缓存的类加载器
+     */
+    public void shutdown() {
+        logger.info("system", "开始关闭插件加载器");
+        
+        try {
+            classLoaders.values().forEach(classLoader -> {
+                try {
+                    classLoader.close();
+                    logger.debug("system", "已关闭类加载器", classLoader.toString());
+                } catch (IOException e) {
+                    logger.warn("system", "关闭类加载器失败", e.getMessage());
+                }
+            });
+            
+            classLoaders.clear();
+            logger.info("system", "插件加载器关闭完成");
+            
+        } catch (Exception e) {
+            logger.error("system", "关闭插件加载器时发生错误", e.getMessage(), e);
+            throw new RuntimeException("插件加载器关闭失败", e);
+        }
+    }
 }

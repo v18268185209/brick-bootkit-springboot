@@ -46,6 +46,8 @@ public enum PluginErrorCode {
     PLUGIN_INSTALL_FAILED(2018, "插件安装失败"),
     PLUGIN_START_FAILED(2019, "插件启动失败"),
     PLUGIN_STOP_FAILED(2020, "插件停止失败"),
+    PLUGIN_COMPATIBILITY_FAILED(2021, "插件兼容性检查失败"),
+    PLUGIN_HEALTH_CHECK_FAILED(2022, "插件健康检查失败"),
     
     // 运行时错误 (3xxx)
     RUNTIME_ERROR(3001, "运行时异常"),

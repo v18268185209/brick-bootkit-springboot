@@ -44,9 +44,20 @@ public class PluginLifecycleManager {
     }
 
     /**
-     * 获取褰撳墠鐘舵€?
+     * 获取当前状态
      */
     public PluginLifecycleState getCurrentState(String pluginId) {
         return pluginStates.getOrDefault(pluginId, PluginLifecycleState.UNINSTALLED);
+    }
+    
+    /**
+     * 关闭生命周期管理器，清理所有资源
+     * 
+     * 注意：这是一个破坏性操作，将清理所有插件状态和监听器
+     */
+    public void shutdown() {
+        pluginStates.clear();
+        listeners.clear();
+        System.out.println("Plugin lifecycle manager shutdown completed");
     }
 }
