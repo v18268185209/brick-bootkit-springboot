@@ -46,6 +46,12 @@ public class DevPathResolve implements PathResolve{
 
     @Override
     public Path resolve(Path path) {
+        // 检查是否是有效的插件目录结构
+        if (isValidPluginDirectory(path)) {
+            return path;
+        }
+        
+        // 检查是否符合旧的target/META-INF结构
         for (String devCompilePackageName : devCompilePackageNames) {
             String compilePackagePathStr = path.toString() + File.separator + devCompilePackageName;
             Path compilePackagePath = Paths.get(compilePackagePathStr);
@@ -54,6 +60,39 @@ public class DevPathResolve implements PathResolve{
             }
         }
         return null;
+    }
+
+    /**
+     * 检查是否是有效的插件目录
+     */
+    private boolean isValidPluginDirectory(Path path) {
+        try {
+            File file = path.toFile();
+            if (!file.exists() || !file.isDirectory()) {
+                return false;
+            }
+            
+            // 检查是否存在插件描述符文件（manifest.properties或plugin.properties）
+            File manifestFile = new File(file, "manifest.properties");
+            File pluginFile = new File(file, "plugin.properties");
+            
+            if (manifestFile.exists() || pluginFile.exists()) {
+                return true;
+            }
+            
+            // 检查是否存在META-INF目录和插件描述符
+            File metaInfDir = new File(file, "META-INF");
+            if (metaInfDir.exists() && metaInfDir.isDirectory()) {
+                File metaInfPluginFile = new File(metaInfDir, PackageStructure.PLUGIN_META_NAME);
+                if (metaInfPluginFile.exists()) {
+                    return true;
+                }
+            }
+            
+            return false;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }
 

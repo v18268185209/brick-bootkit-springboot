@@ -104,7 +104,7 @@ public class DefaultPluginManager implements PluginManager{
     public DefaultPluginManager(RealizeProvider realizeProvider, IntegrationConfiguration configuration) {
         this.provider = Assert.isNotNull(realizeProvider, "参数 realizeProvider 不能为空");
         this.configuration = Assert.isNotNull(configuration, "参数 configuration 不能为空");
-        this.pluginRootDirs = resolvePath(configuration.pluginPath().toString());
+        this.pluginRootDirs = resolvePath(String.join(",",configuration.pluginPath()));
         this.pathResolve = getComposePathResolve();
         this.basicChecker = realizeProvider.getPluginBasicChecker();
         this.launcherChecker = getComposeLauncherChecker(realizeProvider);

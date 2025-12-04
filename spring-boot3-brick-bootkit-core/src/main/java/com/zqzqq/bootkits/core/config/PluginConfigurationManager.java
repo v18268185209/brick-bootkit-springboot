@@ -5,6 +5,7 @@ import org.springframework.context.ApplicationEventPublisher;
 
 import java.io.IOException;
 import java.nio.file.*;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.locks.ReadWriteLock;
@@ -36,6 +37,7 @@ public class PluginConfigurationManager {
     
     // 文件监控
     private WatchService watchService;
+    private Thread watcherThread;
     private final ConcurrentHashMap<String, WatchKey> watchKeys = new ConcurrentHashMap<>();
     
     public PluginConfigurationManager(ApplicationEventPublisher eventPublisher,
@@ -417,7 +419,7 @@ public class PluginConfigurationManager {
             return;
         }
         
-        Thread watcherThread = new Thread(() -> {
+        watcherThread = new Thread(() -> {
             try {
                 while (!Thread.currentThread().isInterrupted()) {
                     WatchKey key = watchService.take();
@@ -445,7 +447,9 @@ public class PluginConfigurationManager {
                 }
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
-                log.info("Configuration file watcher interrupted");
+                log.debug("Configuration file watcher interrupted gracefully");
+            } catch (ClosedWatchServiceException e) {
+                log.debug("WatchService closed, file watcher terminated gracefully");
             } catch (Exception e) {
                 log.error("Error in configuration file watcher", e);
             }
@@ -518,10 +522,17 @@ public class PluginConfigurationManager {
             String pluginId = fileName.substring(0, fileName.lastIndexOf('.'));
             
             if (configurations.containsKey(pluginId)) {
-                // 延迟一点时间，确保文件写入完成
-                Thread.sleep(100);
-                reloadConfiguration(pluginId);
-                log.info("Configuration file changed and reloaded for plugin: {}", pluginId);
+                // 异步处理配置文件变更，避免阻塞监控线程
+                CompletableFuture.runAsync(() -> {
+                    try {
+                        // 短暂延迟确保文件写入完成
+                        Thread.sleep(100);
+                        reloadConfiguration(pluginId);
+                        log.info("Configuration file changed and reloaded for plugin: {}", pluginId);
+                    } catch (Exception e) {
+                        log.error("Failed to reload configuration for plugin: " + pluginId, e);
+                    }
+                });
             }
         } catch (Exception e) {
             log.error("Failed to handle configuration file change: " + filename, e);
@@ -543,6 +554,22 @@ public class PluginConfigurationManager {
      */
     public void shutdown() {
         try {
+            // 先中断监控线程
+            if (watcherThread != null && !watcherThread.isInterrupted()) {
+                watcherThread.interrupt();
+            }
+            
+            // 等待监控线程结束
+            if (watcherThread != null) {
+                try {
+                    watcherThread.join(1000); // 等待最多1秒
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    log.warn("Interrupted while waiting for file watcher thread to terminate");
+                }
+            }
+            
+            // 关闭WatchService
             if (watchService != null) {
                 watchService.close();
             }

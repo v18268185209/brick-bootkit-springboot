@@ -84,7 +84,7 @@
         <assertj.version>3.24.2</assertj.version>
         <slf4j.version>2.0.9</slf4j.version>
         <logback.version>1.4.11</logback.version>
-        <spring-boot.version>3.1.5</spring-boot.version>
+        <spring-boot.version>3.5.5</spring-boot.version>
         <maven-javadoc-plugin.version>3.1.0</maven-javadoc-plugin.version>
         <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
         <jacoco.version>0.8.11</jacoco.version>
@@ -321,6 +321,17 @@
             <properties>
                 <plugin.skip>true</plugin.skip>
             </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <configuration>
+                            <skip>true</skip>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
 
         <profile>

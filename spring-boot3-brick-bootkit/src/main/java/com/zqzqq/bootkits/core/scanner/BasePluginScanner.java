@@ -52,6 +52,7 @@ public class BasePluginScanner implements PluginScanner{
                 continue;
             }
             File file = new File(dir);
+
             if(!file.exists()){
                 continue;
             }
@@ -59,6 +60,7 @@ public class BasePluginScanner implements PluginScanner{
         }
         return pluginPaths;
     }
+
 
     protected void resolve(File currentFile, List<Path> pluginPaths){
         if(currentFile == null || !currentFile.exists()){

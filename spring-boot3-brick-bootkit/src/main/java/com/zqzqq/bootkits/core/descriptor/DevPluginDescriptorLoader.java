@@ -19,6 +19,7 @@ package com.zqzqq.bootkits.core.descriptor;
 import com.zqzqq.bootkits.common.PackageStructure;
 import com.zqzqq.bootkits.common.PackageType;
 import com.zqzqq.bootkits.core.descriptor.decrypt.PluginDescriptorDecrypt;
+import com.zqzqq.bootkits.utils.FilesUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,7 +48,7 @@ public class DevPluginDescriptorLoader extends AbstractPluginDescriptorLoader{
 
     @Override
     protected PluginMeta getPluginMetaInfo(Path location) throws Exception {
-        String pluginMetaPath = location.toString() + File.separator + PackageStructure.PLUGIN_META_NAME;
+        String pluginMetaPath = FilesUtils.joiningFilePath(location.toString(), PackageStructure.PLUGIN_META_NAME);
         File file = new File(pluginMetaPath);
         if(!file.exists()){
             log.debug("Path: [{}] not exist.", location);
