@@ -50,7 +50,7 @@ public class PluginStaticResourceConfig {
 
 
     public void logPathPrefix(){
-        log.info("插件闈欐€佽祫婧愯闂墠缂€配置锟? /{}/{pluginId}", pathPrefix);
+        log.info("插件静态资源访问前端配置 /{}/{pluginId}", pathPrefix);
     }
 
 
