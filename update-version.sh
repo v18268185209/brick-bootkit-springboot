@@ -154,6 +154,30 @@ if [ -d "doc" ]; then
     done
 fi
 
+# 更新Maven插件描述文件中的版本号
+echo -e "${YELLOW}正在更新Maven插件描述文件...${NC}"
+
+# 定义需要更新的Maven插件描述文件
+MAVEN_PLUGIN_FILES=(
+    "spring-boot3-brick-bootkit-maven-packager/src/main/resources/META-INF/maven/com.gitee.starblues.springboot-plugin-maven-packager/plugin-help.xml"
+    "spring-boot3-brick-bootkit-maven-packager/src/main/resources/META-INF/maven/plugin.xml"
+)
+
+for plugin_file in "${MAVEN_PLUGIN_FILES[@]}"; do
+    if [ -f "$plugin_file" ]; then
+        # 使用XML特定的替换，避免影响其他版本号格式
+        # 更新 <version> 标签中的版本号
+        if grep -q "<version>$CURRENT_VERSION</version>" "$plugin_file"; then
+            sed -i '' "s/<version>$CURRENT_VERSION<\/version>/<version>$NEW_VERSION<\/version>/g" "$plugin_file"
+            echo -e "  ${GREEN}✓ $plugin_file 版本号已更新${NC}"
+        else
+            echo -e "  ${YELLOW}⚠ $plugin_file 中未找到版本号 $CURRENT_VERSION${NC}"
+        fi
+    else
+        echo -e "  ${YELLOW}⚠ 文件不存在: $plugin_file${NC}"
+    fi
+done
+
 # 验证版本更新结果（不执行Maven构建）
 echo
 echo -e "${BLUE}=== 验证更新结果 ===${NC}"
@@ -188,6 +212,21 @@ for module_dir in spring-boot3-brick-bootkit-*/; do
             echo -e "  $module_name: ${GREEN}✓ $module_version${NC}"
         else
             echo -e "  $module_name: ${RED}✗ $module_version (期望: $NEW_VERSION)${NC}"
+        fi
+    fi
+done
+
+# 检查Maven插件描述文件
+echo -e "${YELLOW}检查Maven插件描述文件版本号...${NC}"
+for plugin_file in "${MAVEN_PLUGIN_FILES[@]}"; do
+    if [ -f "$plugin_file" ]; then
+        plugin_version=$(grep -o "<version>[^<]*</version>" "$plugin_file" | sed 's/<version>\([^<]*\)<\/version>/\1/' | head -1)
+        plugin_name=$(basename "$plugin_file")
+        
+        if [ "$plugin_version" = "$NEW_VERSION" ]; then
+            echo -e "  $plugin_name: ${GREEN}✓ $plugin_version${NC}"
+        else
+            echo -e "  $plugin_name: ${RED}✗ $plugin_version (期望: $NEW_VERSION)${NC}"
         fi
     fi
 done

@@ -168,6 +168,10 @@ com.zqzqq.bootkits.*
 ```
 
 
+### 更新
+[4.0.1](./doc/updates/4.0.1.md)
+
+
 ## 联系我们
 
 [点击加我微信入群](http://wechat.zqzqq.com/)
