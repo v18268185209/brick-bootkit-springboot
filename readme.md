@@ -172,6 +172,9 @@ com.zqzqq.bootkits.*
 [4.0.1](./doc/updates/4.0.1.md)
 
 
+### 文档地址
+https://brick-bootkit.zqzqq.com/
+
 ## 联系我们
 
 [点击加我微信入群](http://wechat.zqzqq.com/)
