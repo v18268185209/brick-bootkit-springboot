@@ -1,0 +1,7 @@
+<svg width="300" height="100" viewBox="0 0 300 100" xmlns="http://www.w3.org/2000/svg">
+  <rect width="300" height="100" fill="#f8f9fa" rx="8"/>
+  <text x="150" y="40" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#333">遇财（杭州）</text>
+  <text x="150" y="65" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#666">科技有限公司</text>
+  <circle cx="20" cy="50" r="3" fill="#ff6b35"/>
+  <circle cx="280" cy="50" r="3" fill="#ff6b35"/>
+</svg>
