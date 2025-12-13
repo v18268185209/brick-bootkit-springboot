@@ -69,6 +69,7 @@
         <module>spring-boot3-brick-bootkit-core</module>
         <module>spring-boot3-brick-bootkit-bootstrap</module>
         <module>spring-boot3-brick-bootkit-maven-packager</module>
+        <module>spring-boot3-brick-bootkit-scripts</module>
     </modules>
 
     <properties>
