@@ -24,7 +24,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * 组合的PathResolve
+ * 缂佸嫬鎮庨惃鍑盿thResolve
  * @author starBlues
  * @since 3.0.0
  * @version 3.0.0

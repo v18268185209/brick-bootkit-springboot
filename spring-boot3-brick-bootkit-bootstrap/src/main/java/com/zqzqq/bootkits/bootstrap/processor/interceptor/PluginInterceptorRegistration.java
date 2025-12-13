@@ -54,8 +54,8 @@ public class PluginInterceptorRegistration {
      * Create an {@link InterceptorRegistration} instance.
      *
      * @param interceptor 鎷︽埅鍣?
-     * @param type 绫诲瀷
-     * @param pluginRestApiPrefix 鎺ュ彛鍓嶇紑
+     * @param type 类型
+     * @param pluginRestApiPrefix 接口鍓嶇紑
      */
     public PluginInterceptorRegistration(HandlerInterceptor interceptor,
                                          PluginInterceptorRegistry.Type type,
@@ -150,7 +150,7 @@ public class PluginInterceptorRegistration {
     /**
      * Build the underlying interceptor. If URL patterns are provided, the returned
      * type is {@link MappedInterceptor}; otherwise {@link HandlerInterceptor}.
-     * @return object 涓?{@link MappedInterceptor} or {@link HandlerInterceptor}
+     * @return object 在{@link MappedInterceptor} or {@link HandlerInterceptor}
      */
     protected Object getInterceptor() {
         if(type == PluginInterceptorRegistry.Type.PLUGIN){

@@ -49,10 +49,10 @@ public class ClassUtils {
     /**
      * 通过反射获取字段
      *
-     * @param o 瀵硅薄
+     * @param o 对象
      * @param fieldName 字段鍚嶇О
-     * @param <T> 字段绫诲瀷
-     * @return 字段鍊?
+     * @param <T> 字段类型
+     * @return 字段值
      * @throws IllegalAccessException 异常淇℃伅
      */
     public static <T> T getReflectionField(Object o, String fieldName) throws IllegalAccessException {
@@ -68,11 +68,11 @@ public class ClassUtils {
     /**
      * 通过反射获取字段
      *
-     * @param o 瀵硅薄
+     * @param o 对象
      * @param fieldName 字段鍚嶇О
-     * @param fieldClassType 字段绫诲瀷
-     * @param <T> 字段绫诲瀷
-     * @return 字段鍊?
+     * @param fieldClassType 字段类型
+     * @param <T> 字段类型
+     * @return 字段值
      * @throws IllegalAccessException 异常淇℃伅
      */
     public static <T> T getReflectionField(Object o, String fieldName, Class<?> fieldClassType) throws IllegalAccessException {
@@ -88,9 +88,9 @@ public class ClassUtils {
      * 通过反射Field获取字段
      *
      * @param field Field字段
-     * @param o 褰撳墠瀵硅薄
-     * @param <T> 字段绫诲瀷
-     * @return 字段鍊?
+     * @param o 褰撳墠对象
+     * @param <T> 字段类型
+     * @return 字段值
      * @throws IllegalAccessException 异常淇℃伅
      */
     @SuppressWarnings("unchecked")

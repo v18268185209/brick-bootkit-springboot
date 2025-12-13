@@ -17,7 +17,7 @@
 package com.zqzqq.bootkits.core.exception;
 
 /**
- * 插件异常基类
+ * 鎻掍欢异常鍩虹被
  *
  * @author starBlues
  * @since 4.0.0

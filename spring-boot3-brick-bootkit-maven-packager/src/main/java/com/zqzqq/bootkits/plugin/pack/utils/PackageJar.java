@@ -25,7 +25,7 @@ import java.io.File;
 import java.nio.file.Files;
 
 /**
- * jar 鎵撳寘工具
+ * jar 打包工具
  *
  * @author starBlues
  * @since 3.0.0

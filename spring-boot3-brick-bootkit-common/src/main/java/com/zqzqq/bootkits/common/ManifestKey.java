@@ -101,11 +101,11 @@ public class ManifestKey {
 
 
     /**
-     * 获取鍊?
+     * 获取值
      *
      * @param attributes attributes
-     * @param key 获取鐨刱ey
-     * @return 获取鐨勫€?
+     * @param key 获取的key
+     * @return 获取的值或null
      */
     public static String getValue(Attributes attributes, String key){
         try {

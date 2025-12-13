@@ -95,7 +95,7 @@ public class SpringBeanCustomUtils {
     }
 
     /**
-     * 获取存在鐨凚ean銆傚悕绉板拰绫诲瀷浠绘剰鎵归噺鍗冲彲杩斿洖
+     * 获取存在鐨凚ean銆傚悕绉板拰类型浠绘剰鎵归噺鍗冲彲杩斿洖
      * @param applicationContext applicationContext
      * @param beanName bean鍚嶇О
      * @param beanClass bean class
@@ -122,7 +122,7 @@ public class SpringBeanCustomUtils {
     /**
      * 通过注解获取bean
      * @param applicationContext applicationContext
-     * @param annotationType 注解绫诲瀷
+     * @param annotationType 注解类型
      * @return List
      */
     public static List<Object> getBeansWithAnnotation(ApplicationContext applicationContext,

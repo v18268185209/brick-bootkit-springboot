@@ -34,7 +34,7 @@ public class OrderUtils {
 
     /**
      * list鎸夌収int鎺掑簭. 鏁板瓧瓒婂ぇ, 瓒婃帓鍦ㄥ墠闈?
-     * @param list list闆嗗悎
+     * @param list list集合
      * @param orderImpl 鎺掑簭实现
      * @param <T> T
      * @return List
@@ -49,9 +49,9 @@ public class OrderUtils {
 
 
     /**
-     * 瀵?OrderPriority 杩涜鎺掑簭鎿嶄綔
+     * 瀵?OrderPriority 杩涜鎺掑簭操作
      * @param order OrderPriority
-     * @param <T> 褰撳墠鎿嶄綔瑕佽鎺掑簭鐨刡ean
+     * @param <T> 褰撳墠操作瑕佽鎺掑簭鐨刡ean
      * @return Comparator
      */
     public static <T> Comparator<T> orderPriority(final Function<T, OrderPriority> order){

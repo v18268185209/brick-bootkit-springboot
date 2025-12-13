@@ -244,7 +244,7 @@ public class PluginStaticResourceResolver extends AbstractResourceResolver {
 
 
     /**
-     * 姣忔柊澧炰竴涓彃锟? 閮介渶瑕佽皟鐢ㄨ鏂规硶锛屾潵瑙ｆ瀽璇ユ彃浠剁殑 StaticResourceConfig 配置銆傚苟灏嗗叾淇濆瓨锟?StaticResourceConfig bean 涓拷?
+     * 姣忔柊澧炰竴涓彃锟? 閮介渶瑕佽皟鐢ㄨ方法锛屾潵解析璇ユ彃浠剁殑 StaticResourceConfig 配置銆傚苟灏嗗叾淇濆瓨锟?StaticResourceConfig bean 涓拷?
      * @param pluginDescriptor 插件淇℃伅
      * @param pluginClassLoader 插件classloader
      * @param webConfig web配置
@@ -315,7 +315,7 @@ public class PluginStaticResourceResolver extends AbstractResourceResolver {
 
 
     /**
-     * 卸载插件鏃躲€傝皟鐢ㄨ鏂规硶移除插件的资源婧愪俊锟?
+     * 卸载插件鏃躲€傝皟鐢ㄨ方法移除插件的资源婧愪俊锟?
      * @param pluginId 插件id
      */
     public static synchronized void remove(String pluginId){
@@ -327,7 +327,7 @@ public class PluginStaticResourceResolver extends AbstractResourceResolver {
     }
 
     /**
-     * 插件资源瑙ｆ瀽鍚庣殑淇℃伅
+     * 插件资源解析鍚庣殑淇℃伅
      */
     private static class PluginStaticResource {
 
@@ -342,7 +342,7 @@ public class PluginStaticResourceResolver extends AbstractResourceResolver {
         private ClassLoader pluginClassLoader;
 
         /**
-         * 瀹氫箟鐨刢lasspath闆嗗悎
+         * 瀹氫箟鐨刢lasspath集合
          */
         private Set<String> classPaths;
 

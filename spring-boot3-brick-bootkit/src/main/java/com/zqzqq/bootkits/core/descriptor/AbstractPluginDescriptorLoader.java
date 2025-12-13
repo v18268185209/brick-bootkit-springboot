@@ -65,7 +65,7 @@ public abstract class AbstractPluginDescriptorLoader implements PluginDescriptor
         try {
             pluginMeta = getPluginMetaInfo(location);
             if(pluginMeta == null || pluginMeta.getProperties() == null){
-                logger.debug("璺緞[{}]娌℃湁鍙戠幇插件配置淇℃伅", location);
+                logger.debug("路径[{}]没有发现插件配置信息", location);
                 return null;
             }
             return create(pluginMeta, location);
@@ -84,8 +84,8 @@ public abstract class AbstractPluginDescriptorLoader implements PluginDescriptor
     }
 
     /**
-     * 子类获取插件淇℃伅
-     * @param location 璺緞
+     * 子类获取插件信息
+     * @param location 路径
      * @return Properties
      * @throws Exception 异常
      */
@@ -136,12 +136,12 @@ public abstract class AbstractPluginDescriptorLoader implements PluginDescriptor
         }
         File file = new File(libIndex);
         if(!file.exists()){
-            // 如果缁濆璺緞不存在锟? 鍒欏垽鏂浉瀵硅矾锟?
+            // 如果绝对路径不存在，则检查相对路径
             String pluginPath = getValue(properties, PLUGIN_PATH);
             file = new File(FilesUtils.joiningFilePath(pluginPath, libIndex));
         }
         if(!file.exists()){
-            // 閮戒笉存在, 鍒欒繑鍥炰负锟?
+            // 都不存在, 则返回空
             return new PluginResourcesConfig();
         }
         try {
@@ -187,18 +187,18 @@ public abstract class AbstractPluginDescriptorLoader implements PluginDescriptor
         if(FilesUtils.existFile(configPluginLibDir)){
             return configPluginLibDir;
         }
-        // 鍏堟鏌ユ彃浠剁浉瀵圭洰锟?
+        // 先检查插件相对目录
         File libDirFile = FilesUtils.resolveExistRelativePathFile(descriptor.getPluginPath(), configPluginLibDir);
         if(libDirFile != null){
             return libDirFile.getPath();
         }
-        // 鍐嶇浉瀵规彃浠跺瓨鏀剧洰锟?
+        // 再相对插件存放目录
         libDirFile = FilesUtils.resolveExistRelativePathFile(
                 new File(descriptor.getPluginPath()).getParent(), configPluginLibDir);
         if(libDirFile != null){
             return libDirFile.getPath();
         }
-        // 链鍚庣浉瀵逛富程序鐩綍
+        // 最后相对主程序目录
         libDirFile = FilesUtils.resolveExistRelativePathFile(new File("").getAbsolutePath(),
                 configPluginLibDir);
         if(libDirFile != null){
@@ -214,8 +214,8 @@ public abstract class AbstractPluginDescriptorLoader implements PluginDescriptor
         }
         String joiningFilePath = FilesUtils.joiningFilePath(descriptor.getPluginLibDir(), index);
         if(index.startsWith(configPluginLibDir)){
-            // 如果 index 涓墠缂€配置锟?PLUGIN.META 涓殑 plugin.libDir  鍒欏皾璇曞垽鏂畬鏁存嫾鎺ョ殑渚濊禆璺緞文件鏄惁存在
-            // 如果存在, 鍒欒繑锟? 如果不存在锟? 鍒欏幓鎺夐噸澶嶅墠缂€, 杩斿洖銆傝澶勬槸涓轰簡鍏煎瑙ｅ帇鍚庣殑jar涓璱ndex存在 libDir 鍓嶇紑
+            // 如果 index 之前配置了 PLUGIN.META 中的 plugin.libDir 则尝试检查完整组合的依赖路径文件是否存在
+            // 如果存在, 返回 如果不存在, 则去掉重试前缀, 返回。该处理是为了兼容压缩后的jar中index存在 libDir 前缀
             if(FilesUtils.existFile(joiningFilePath)){
                 return joiningFilePath;
             }

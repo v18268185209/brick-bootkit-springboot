@@ -50,13 +50,13 @@ public class PluginGeneralUrlClassLoader extends GeneralUrlClassLoader implement
     }
     
     /**
-     * 增强不Spring Boot 3.5.x的兼容性？
+     * 增强与Spring Boot 3.5.x的兼容性
      * Spring Boot 3.5.x涓彲鑳戒娇鐢ㄤ簡鏇翠弗鏍肩殑绫诲姞杞芥満锟?
      */
     @Override
     protected Class<?> loadClass(String name, boolean resolve) throws ClassNotFoundException {
         try {
-            // 棣栧厛尝试浠庣埗绫诲姞杞藉櫒加载Spring鐩稿叧锟?
+            // 首先尝试从父类加载器加载Spring相关类
             if (name.startsWith("org.springframework.") || 
                 name.startsWith("jakarta.") || 
                 name.startsWith("java.") ||
@@ -70,7 +70,7 @@ public class PluginGeneralUrlClassLoader extends GeneralUrlClassLoader implement
             // 浣跨敤标准绫诲姞杞介€昏緫
             return super.loadClass(name, resolve);
         } catch (ClassNotFoundException e) {
-            // 如果标准加载失败锛屽皾璇曚粠线程上下文件类加载器加锟?
+            // 如果标准加载失败，尝试从线程上下文件类加载器加
             try {
                 ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
                 if (contextClassLoader != null && contextClassLoader != this) {

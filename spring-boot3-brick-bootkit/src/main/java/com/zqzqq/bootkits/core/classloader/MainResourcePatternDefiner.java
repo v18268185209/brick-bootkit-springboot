@@ -29,7 +29,7 @@ public interface MainResourcePatternDefiner {
 
     /**
      * 鍖呭惈资源鍚嶇О.
-     * @return 资源鍚嶇О闆嗗悎
+     * @return 资源鍚嶇О集合
      */
     Set<String> getIncludePatterns();
 

@@ -46,7 +46,7 @@ public interface PluginDescriptor {
     String getPluginVersion();
 
     /**
-     * 获取插件寮曞绫?
+     * 获取插件寮曞类
      * @return String
      */
     String getPluginBootstrapClass();
@@ -98,14 +98,14 @@ public interface PluginDescriptor {
     String getLicense();
 
     /**
-     * 获取褰撳墠插件渚濊禆
+     * 获取褰撳墠插件依赖
      * @return List
      */
     List<DependencyPlugin> getDependencyPlugin();
 
     /**
-     * 得到插件绫诲瀷
-     * @return 插件绫诲瀷
+     * 得到插件类型
+     * @return 插件类型
      */
     PluginType getType();
 
@@ -138,16 +138,16 @@ public interface PluginDescriptor {
     Long getLicenseDateMill();
 
     /**
-     * 获取闇€瑕佹帓闄ょ殑鑷姩配置绫?
-     * @return 排除鐨勮嚜鍔ㄩ厤缃被闆嗗悎
+     * 获取闇€瑕佹帓闄ょ殑鑷姩配置类
+     * @return 排除鐨勮嚜鍔ㄩ厤缃被集合
      */
     default Set<String> getExcludeAutoConfigurations() {
         return Collections.emptySet();
     }
 
     /**
-     * 璁剧疆闇€瑕佹帓闄ょ殑鑷姩配置绫?
-     * @param excludeClasses 排除鐨勮嚜鍔ㄩ厤缃被闆嗗悎
+     * 璁剧疆闇€瑕佹帓闄ょ殑鑷姩配置类
+     * @param excludeClasses 排除鐨勮嚜鍔ㄩ厤缃被集合
      */
     default void setExcludeAutoConfigurations(Set<String> excludeClasses) {
         // 榛樿绌哄疄鐜?
@@ -159,7 +159,7 @@ public interface PluginDescriptor {
      */
     default InsidePluginDescriptor toInsidePluginDescriptor() {
         try {
-            // 浣跨敤Path.of()鍒涘缓涓存椂Path瀵硅薄
+            // 浣跨敤Path.of()鍒涘缓涓存椂Path对象
             Path pluginPath = Path.of(getPluginPath());
             DefaultInsidePluginDescriptor insideDescriptor = new DefaultInsidePluginDescriptor(
                 getPluginId(),
@@ -177,7 +177,7 @@ public interface PluginDescriptor {
             insideDescriptor.setLicenseDesc(getLicenseDesc());
             insideDescriptor.setLicenseDateMill(getLicenseDateMill());
             
-            // 浼犻€掓帓闄ょ殑鑷姩配置绫?
+            // 浼犻€掓帓闄ょ殑鑷姩配置类
             if (this instanceof InsidePluginDescriptor) {
                 insideDescriptor.setExcludeAutoConfigurations(
                     ((InsidePluginDescriptor) this).getExcludeAutoConfigurations()

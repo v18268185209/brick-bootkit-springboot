@@ -54,7 +54,7 @@ public class AutoPluginApplication extends DefaultPluginApplication
     @Override
     public void initialize(ApplicationContext applicationContext,
                            PluginInitializerListener listener) {
-        // 姝ゅ涓嶅厑璁告墜鍔ㄥ垵濮嬪寲
+        // 姝ゅ不可璁告墜鍔ㄥ垵濮嬪寲
         throw new RuntimeException("Cannot be initialized manually");
     }
 

@@ -24,7 +24,7 @@ import java.util.Enumeration;
 import java.util.List;
 
 /**
- * 空的资源存储
+ * 绌虹殑资源存储
  *
  * @author starBlues
  * @since 3.0.4

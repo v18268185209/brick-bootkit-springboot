@@ -79,13 +79,13 @@ public class SpringPluginHookWrapper implements SpringPluginHook {
     @Override
     public void close(PluginCloseType closeType) throws Exception {
         String pluginId = pluginInsideInfo.getPluginId();
-        log.debug("寮€濮嬪叧闂彃锟? {}", pluginId);
+        log.debug("开始关闭插件 {}", pluginId);
         
-        // 1. 关闭 application 绛変俊锟?
+        // 1. 关闭 application 等信息
         try {
             target.close(closeType);
         } catch (Exception e){
-            log.error("关闭插件搴旂敤上下囧紓锟? {}", e.getMessage(), e);
+            log.error("关闭插件应用程序上下文异常 {}", e.getMessage(), e);
         }
         
         // 2. 关闭 pluginLaunchInvolved
@@ -106,7 +106,7 @@ public class SpringPluginHookWrapper implements SpringPluginHook {
             log.error("关闭插件绫诲姞杞藉櫒异常: {}", e.getMessage(), e);
         }
         
-        // 4. 移除插件jar绛変俊锟?
+        // 4. 移除插件jar等信息
         try {
             PluginResourceStorage.removePlugin(pluginId);
         } catch (Exception e) {
@@ -118,7 +118,7 @@ public class SpringPluginHookWrapper implements SpringPluginHook {
             System.gc();
             log.debug("插件[{}]关闭瀹屾垚", pluginId);
         } catch (Exception e) {
-            log.error("插件关闭鍚庡瀮鍦惧洖鏀跺紓锟? {}", e.getMessage(), e);
+            log.error("插件关闭后内存回收异常 {}", e.getMessage(), e);
         }
     }
 }

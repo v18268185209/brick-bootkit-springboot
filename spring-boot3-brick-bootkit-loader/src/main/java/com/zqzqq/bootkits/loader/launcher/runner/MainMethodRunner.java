@@ -17,7 +17,7 @@
 package com.zqzqq.bootkits.loader.launcher.runner;
 
 /**
- * 主程序方法启动器
+ * 娑撹崵鈻兼惔蹇旀煙濞夋洖鎯庨崝銊ユ珤
  *
  * @author starBlues
  * @since 3.0.0

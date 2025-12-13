@@ -74,7 +74,7 @@ public class AutoIntegrationConfiguration extends DefaultIntegrationConfiguratio
     private List<String> pluginPath;
 
     /**
-     * 涓婁紶鐨勬彃浠舵墍瀛樺偍鐨勪复鏃剁洰锟?
+     * 涓婁紶鐨勬彃浠舵墍存储鐨勪复鏃剁洰锟?
      */
     @Value("${uploadTempPath:}")
     private String uploadTempPath;
@@ -86,13 +86,13 @@ public class AutoIntegrationConfiguration extends DefaultIntegrationConfiguratio
     private String backupPath;
 
     /**
-     * 插件rest鎺ュ彛鍓嶇紑. 榛樿: /plugins
+     * 插件rest接口鍓嶇紑. 榛樿: /plugins
      */
     @Value("${pluginRestPathPrefix:/plugins}")
     private String pluginRestPathPrefix;
 
     /**
-     * 鏄惁鍚敤插件id浣滀负rest鎺ュ彛鍓嶇紑, 榛樿涓哄惎锟?
+     * 鏄惁鍚敤插件id浣滀负rest接口鍓嶇紑, 榛樿涓哄惎锟?
      * 如果涓哄惎锟? 鍒欏湴鍧€锟?/pluginRestPathPrefix/pluginId
      * pluginRestPathPrefix: 涓簆luginRestPathPrefix鐨勯厤缃拷?
      * pluginId: 涓烘彃浠秈d
@@ -133,7 +133,7 @@ public class AutoIntegrationConfiguration extends DefaultIntegrationConfiguratio
     private Boolean exactVersion;
 
     /**
-     * 鎻掓槸鍚︽壂锟?swagger 鎺ュ彛
+     * 鎻掓槸鍚︽壂锟?swagger 接口
      */
     @Value("${pluginSwaggerScan:true}")
     private Boolean pluginSwaggerScan;

@@ -30,7 +30,7 @@ public interface Launcher<R> {
     /**
      * 鍚姩杩愯
      * @param args 鍚姩浼犲叆鐨勫弬鏁?
-     * @return 鍚姩鍚庣殑杩斿洖鍊?
+     * @return 鍚姩鍚庣殑杩斿洖值
      * @throws Exception 鍚姩异常
      */
     R run(String... args) throws Exception;

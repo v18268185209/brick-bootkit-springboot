@@ -37,7 +37,7 @@ public interface ResourceLoaderFactory extends AutoCloseable, Release {
 
     /**
      * 根据璺緞瀛楃涓叉坊鍔犺祫婧?
-     * @param path 璺緞瀛楃涓?
+     * @param path 璺緞瀛楃在
      * @throws Exception 添加资源异常
      */
     void addResource(String path) throws Exception;
@@ -85,7 +85,7 @@ public interface ResourceLoaderFactory extends AutoCloseable, Release {
     Resource findFirstResource(String name);
 
     /**
-     * 根据资源鍚嶇О获取资源闆嗗悎
+     * 根据资源鍚嶇О获取资源集合
      * @param name 资源鍚嶇О
      * @return Resource
      */

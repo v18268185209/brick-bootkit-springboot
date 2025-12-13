@@ -22,7 +22,7 @@ import com.zqzqq.bootkits.core.exception.PluginProhibitStopException;
 import com.zqzqq.bootkits.spring.web.thymeleaf.ThymeleafConfig;
 
 /**
- * 插件鎶婃焺鎺ュ彛
+ * 插件鎶婃焺接口
  * @author starBlues
  * @since 3.0.0
  * @version 3.1.0
@@ -55,7 +55,7 @@ public interface SpringPluginHook {
 
     /**
      * 关闭调用
-     * @param closeType 关闭绫诲瀷
+     * @param closeType 关闭类型
      * @since 3.1.0
      * @throws Exception 关闭异常
      */

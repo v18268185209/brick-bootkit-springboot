@@ -27,7 +27,7 @@ public interface PluginInterceptorRegister {
 
     /**
      * 鎷︽埅鍣ㄦ敞鍐岃€?
-     * @param registry 注册瀵硅薄
+     * @param registry 注册对象
      */
     void registry(PluginInterceptorRegistry registry);
 

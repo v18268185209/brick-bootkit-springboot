@@ -32,7 +32,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * 蹇€熶笖鍙紦瀛樼殑资源存储锟?
- * 浼樼偣: 閲婃斁鍓嶉€熷害姣旇緝锟? 閲婃斁鍚庡彲根据LRU缓存鏈哄埗杩涜缓存
+ * 浼樼偣: 释放鍓嶉€熷害比较锟? 释放鍚庡彲根据LRU缓存鏈哄埗杩涜缓存
  * 缺点: 释放前占用内存比较高
  *
  * @author starBlues
@@ -139,7 +139,7 @@ public class CacheFastResourceStorage extends AbstractResourceStorage {
             }
         }
         
-        // 娓呯悊过期资源
+        // 清理过期资源
         try {
             if (resourceStorage != null) {
                 resourceStorage.cleanExpired();
@@ -154,7 +154,7 @@ public class CacheFastResourceStorage extends AbstractResourceStorage {
     @Override
     public void close() throws Exception {
         try {
-            // 娓呯悊骞堕噴鏀炬墍鏈夎祫锟?
+            // 清理骞堕噴鏀炬墍鏈夎祫锟?
             if (resourceStorage != null) {
                 resourceStorage.clear(resource -> {
                     if (resource != null) {
@@ -172,7 +172,7 @@ public class CacheFastResourceStorage extends AbstractResourceStorage {
                 }
             }
             
-            // 调用鐖剁被关闭鏂规硶
+            // 调用鐖剁被关闭方法
             super.close();
         } catch (Exception e) {
             throw new Exception("关闭资源存储异常", e);

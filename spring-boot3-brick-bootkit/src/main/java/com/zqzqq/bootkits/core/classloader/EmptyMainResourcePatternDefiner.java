@@ -19,7 +19,7 @@ package com.zqzqq.bootkits.core.classloader;
 import java.util.Set;
 
 /**
- * 空的 MainResourceDefiner
+ * 绌虹殑 MainResourceDefiner
  *
  * @author starBlues
  * @since 3.0.0

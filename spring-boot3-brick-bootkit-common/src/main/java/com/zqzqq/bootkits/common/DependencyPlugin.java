@@ -26,14 +26,14 @@ package com.zqzqq.bootkits.common;
 public interface DependencyPlugin {
 
     /**
-     * 渚濊禆插件id
+     * 依赖插件id
      *
      * @return String
      */
     String getId();
 
     /**
-     * 渚濊禆插件版本. 如果璁剧疆涓?0.0.0 琛ㄧず鏀寔浠绘剰版本渚濊禆
+     * 依赖插件版本. 如果璁剧疆在0.0.0 琛ㄧず鏀寔浠绘剰版本依赖
      *
      * @return String
      */

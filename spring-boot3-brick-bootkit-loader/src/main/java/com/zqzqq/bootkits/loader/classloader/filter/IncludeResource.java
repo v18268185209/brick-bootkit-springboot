@@ -27,7 +27,7 @@ import java.util.jar.JarEntry;
 public interface IncludeResource {
 
     /**
-     * 杩囨护排除
+     * 过滤排除
      * @param jarEntry jarEntry
      * @return boolean
      */

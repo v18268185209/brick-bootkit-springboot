@@ -70,7 +70,7 @@ public class JarResourceLoader extends AbstractResourceLoader {
 
     @Override
     protected void loadOfChild(ResourceStorage resourceStorage) throws Exception {
-        // 瑙ｆ瀽
+        // 解析
         try {
             JarEntry jarEntry = null;
             while ((jarEntry = jarInputStream.getNextJarEntry()) != null) {

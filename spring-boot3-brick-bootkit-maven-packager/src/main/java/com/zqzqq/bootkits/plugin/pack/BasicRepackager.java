@@ -46,7 +46,7 @@ import static com.zqzqq.bootkits.common.PackageStructure.*;
 import static com.zqzqq.bootkits.common.PluginDescriptorKey.*;
 
 /**
- * 鍩虹鎵撳寘
+ * 鍩虹打包
  *
  * @author starBlues
  * @since 3.0.0

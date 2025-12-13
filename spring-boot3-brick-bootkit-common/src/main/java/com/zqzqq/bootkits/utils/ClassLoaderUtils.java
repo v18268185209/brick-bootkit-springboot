@@ -4,7 +4,7 @@ import java.io.Closeable;
 import java.lang.reflect.Method;
 
 /**
- * 绫诲姞杞藉櫒工具绫?
+ * 绫诲姞杞藉櫒工具类
  * @since 3.5.5
  */
 public class ClassLoaderUtils {
@@ -32,7 +32,7 @@ public class ClassLoaderUtils {
                 closeMethod.invoke(classLoader);
             }
         } catch (NoSuchMethodException e) {
-            // 绫诲姞杞藉櫒娌℃湁close鏂规硶锛岄潤榛樺鐞?
+            // 绫诲姞杞藉櫒娌℃湁close方法锛岄潤榛樺鐞?
         } catch (Exception e) {
             System.err.println("Failed to close ClassLoader: " + e.getMessage());
         }

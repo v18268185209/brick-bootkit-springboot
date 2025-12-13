@@ -17,7 +17,7 @@
 package com.zqzqq.bootkits.utils;
 
 /**
- * 鎺掑簭鎺ュ彛
+ * 鎺掑簭接口
  * @author starBlues
  * @since 1.0.0
  * @version 1.0.0

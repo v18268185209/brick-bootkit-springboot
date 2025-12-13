@@ -66,7 +66,7 @@ public interface PluginLaunchInvolved {
     default void failure(PluginInsideInfo pluginInsideInfo, ClassLoader classLoader, Throwable throwable) throws Exception{}
 
     /**
-     * 关闭鐨勬椂鍊?
+     * 关闭鐨勬椂值
      * @param pluginInsideInfo 插件淇℃伅
      * @param classLoader 插件classloader
      * @throws Exception 鎵ц异常

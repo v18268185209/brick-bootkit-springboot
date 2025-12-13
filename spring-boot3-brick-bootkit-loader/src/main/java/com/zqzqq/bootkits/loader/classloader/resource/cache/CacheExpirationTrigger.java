@@ -29,14 +29,14 @@ public interface CacheExpirationTrigger {
 
     /**
      * 添加缓存过期璋冨害
-     * @param key 缓存鐨刱ey
-     * @param cache 缓存瀵硅薄
+     * @param key 缓存的key
+     * @param cache 缓存对象
      */
     void addCache(String key, Cache<?, ?> cache);
 
     /***
      * 获取缓存
-     * @param key 缓存鐨刱ey
+     * @param key 缓存的key
      * @param cacheSupplier 不存在时提供者，并添加到缓存中
      * @return 缓存
      * @param <K> K
@@ -46,7 +46,7 @@ public interface CacheExpirationTrigger {
 
     /**
      * 移除缓存过期璋冨害
-     * @param key 缓存鐨刱ey
+     * @param key 缓存的key
      */
     void removeCache(String key);
 

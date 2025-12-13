@@ -20,7 +20,7 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
 /**
- * 重新打包接口
+ * 閲嶆柊打包接口
  *
  * @author starBlues
  * @since 3.0.0
@@ -29,7 +29,7 @@ import org.apache.maven.plugin.MojoFailureException;
 public interface Repackager {
 
     /**
-     * 閲嶆柊鎵撳寘
+     * 闁插秵鏌婇幍鎾冲瘶
      * @throws MojoExecutionException MojoExecutionException
      * @throws MojoFailureException MojoFailureException
      */

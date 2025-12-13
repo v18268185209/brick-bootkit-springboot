@@ -42,7 +42,7 @@ public interface PluginCloseListener {
      * 关闭鏃惰皟鐢?
      * @param applicationContext 褰撳墠插件鐨凙pplicationContext
      * @param pluginInfo 褰撳墠插件淇℃伅
-     * @param closeType 鍋滄绫诲瀷
+     * @param closeType 鍋滄类型
      * @since 3.1.0
      */
     default void close(GenericApplicationContext applicationContext,

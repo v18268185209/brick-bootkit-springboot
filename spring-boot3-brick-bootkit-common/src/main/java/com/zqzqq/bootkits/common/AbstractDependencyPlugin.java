@@ -35,14 +35,14 @@ public abstract class AbstractDependencyPlugin implements DependencyPlugin{
 
 
     /**
-     * set渚濊禆插件id
+     * set依赖插件id
      *
      * @param id 插件id
      */
     public abstract void setId(String id);
 
     /**
-     * set渚濊禆插件版本
+     * set依赖插件版本
      *
      * @param version 插件版本
      */

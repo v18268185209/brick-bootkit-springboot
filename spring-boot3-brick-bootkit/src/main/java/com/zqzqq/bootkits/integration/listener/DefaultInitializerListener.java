@@ -50,7 +50,7 @@ public class DefaultInitializerListener implements PluginInitializerListener{
     }
 
     private void refresh(){
-        // Knife4j浼氳嚜鍔ㄥ鐞咥PI鏂囨。鏇存柊锛屾棤闇€鎵嬪姩鎿嶄綔
+        // Knife4j浼氳嚜鍔ㄥ鐞咥PI鏂囨。鏇存柊锛屾棤闇€鎵嬪姩操作
         if(swaggerListener != null){
             // 绌哄疄鐜帮紝Knife4j浼氳嚜琛屽鐞嗘枃妗ｆ洿鏂?
         }

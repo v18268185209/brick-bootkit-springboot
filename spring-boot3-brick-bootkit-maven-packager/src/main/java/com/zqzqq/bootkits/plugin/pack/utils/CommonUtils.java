@@ -29,7 +29,7 @@ import java.util.Objects;
 import java.util.jar.JarFile;
 
 /**
- * Object 工具绫?
+ * Object 工具类
  *
  * @author starBlues
  * @since 3.0.0

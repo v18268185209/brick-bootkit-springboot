@@ -96,7 +96,7 @@ public class DefaultPluginApplication extends AbstractPluginApplication {
     }
 
     /**
-     * 鍒涘缓插件鎿嶄綔鑰呫€傚瓙绫诲彲扩展
+     * 鍒涘缓插件操作鑰呫€傚瓙绫诲彲扩展
      * @param applicationContext Spring ApplicationContext
      * @return pluginOperator
      */
@@ -146,7 +146,7 @@ public class DefaultPluginApplication extends AbstractPluginApplication {
     }
 
     /**
-     * 鐩存帴灏?PluginOperator 鍜?PluginUser 娉ㄥ叆鍒癆pplicationContext瀹瑰櫒涓?
+     * 鐩存帴灏?PluginOperator 鍜?PluginUser 娉ㄥ叆鍒癆pplicationContext瀹瑰櫒在
      * @param applicationContext ApplicationContext
      */
     protected void setBeanFactory(GenericApplicationContext applicationContext){

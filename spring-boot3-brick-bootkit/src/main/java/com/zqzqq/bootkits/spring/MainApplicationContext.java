@@ -23,7 +23,7 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 import java.util.Map;
 
 /**
- * 主程序锟?ApplicationContext 鎺ュ彛
+ * 主程序锟?ApplicationContext 接口
  * @author starBlues
  * @version 3.0.1
  */
@@ -44,21 +44,21 @@ public interface MainApplicationContext extends ApplicationContext {
 
     /**
      * 杩斿洖主程序搴忛厤缃殑Profile配置
-     * @return String 鏁扮粍
+     * @return String 数组
      */
     String[] getActiveProfiles();
 
     /**
      * 杩斿洖主程序搴忛粯璁ょ殑Profile配置
-     * @return String 鏁扮粍
+     * @return String 数组
      */
     String[] getDefaultProfiles();
 
     /**
-     * 浠庝富程序获取渚濊禆
+     * 浠庝富程序获取依赖
      *
-     * @param requestingBeanName 渚濊禆Bean鍚嶇О
-     * @param dependencyType 渚濊禆绫诲瀷
+     * @param requestingBeanName 依赖Bean鍚嶇О
+     * @param dependencyType 依赖类型
      * @return boolean
      */
     Object resolveDependency(String requestingBeanName, Class<?> dependencyType);

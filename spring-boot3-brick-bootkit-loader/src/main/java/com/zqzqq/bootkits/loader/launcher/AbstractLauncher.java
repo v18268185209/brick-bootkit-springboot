@@ -88,7 +88,7 @@ public abstract class AbstractLauncher<R> implements Launcher<R> {
      * 子类实现具体的启动方法
      * @param classLoader 褰撳墠鐨凜lassLoader
      * @param args 鍚姩参数
-     * @return 鍚姩杩斿洖鍊?
+     * @return 鍚姩杩斿洖值
      * @throws Exception 鍚姩异常
      */
     protected abstract R launch(ClassLoader classLoader, String... args) throws Exception;

@@ -54,7 +54,7 @@ public class JarOuterPackager extends JarNestPackager {
 
     @Override
     public void repackage() throws MojoExecutionException, MojoFailureException {
-        // 鐢熸垚渚濊禆文件澶?
+        // 鐢熸垚依赖文件澶?
         String rootDir = createRootDir();
         mainConfig.setOutputDirectory(rootDir);
         super.repackage();

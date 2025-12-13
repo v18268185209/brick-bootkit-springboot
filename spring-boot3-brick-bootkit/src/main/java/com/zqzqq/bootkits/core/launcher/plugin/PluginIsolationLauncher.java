@@ -60,7 +60,7 @@ public class PluginIsolationLauncher extends AbstractPluginLauncher {
 
     protected MainResourceMatcher getMainResourceMatcher(PluginInteractive pluginInteractive){
         MainApplicationContext mainApplicationContext = pluginInteractive.getMainApplicationContext();
-        // 获取主程序搴忓畾涔夌殑资源鍖归厤
+        // 获取主程序包定义的资源匹配
         List<MainResourceMatcher> mainResourceMatchers =
                 SpringBeanCustomUtils.getBeans(mainApplicationContext, MainResourceMatcher.class);
 

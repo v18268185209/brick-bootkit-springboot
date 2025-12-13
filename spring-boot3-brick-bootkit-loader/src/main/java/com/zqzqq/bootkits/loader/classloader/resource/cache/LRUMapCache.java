@@ -23,7 +23,7 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 /**
- * LRU 缓存实现
+ * LRU 缂撳瓨瀹炵幇
  *
  * @author starBlues
  * @since 3.1.1

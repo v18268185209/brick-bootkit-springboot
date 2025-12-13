@@ -25,7 +25,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
- * 瑙ｅ喅插件线程涓殑ClassLoader
+ * 鐟欙絽鍠呮彃浠剁嚎绋嬫稉顓犳畱ClassLoader
  *
  * @author starBlues
  * @version 3.0.3

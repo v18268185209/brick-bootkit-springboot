@@ -27,7 +27,7 @@ import java.net.URL;
 import java.util.Enumeration;
 
 /**
- * 插件 classLoader
+ * 鎻掍欢 classLoader
  *
  * @author starBlues
  * @version 3.0.3

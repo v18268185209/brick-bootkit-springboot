@@ -17,7 +17,7 @@
 package com.zqzqq.bootkits.loader.utils;
 
 /**
- * 姣旇緝涓や釜绫荤被鍨?
+ * 比较涓や釜类鍨?
  *
  * @author starBlues
  * @since 3.0.0

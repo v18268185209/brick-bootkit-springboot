@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 /**
- * String 工具绫?
+ * String 工具类
  *
  * @author starBlues
  * @since 3.0.0

@@ -41,7 +41,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * 重新打包 mojo
+ * 閲嶆柊打包 mojo
  *
  * @author starBlues
  * @since 3.0.0

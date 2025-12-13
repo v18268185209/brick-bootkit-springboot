@@ -24,8 +24,8 @@ package com.zqzqq.bootkits.spring;
 public interface ProxyFactory {
 
     /**
-     * 获取浠ｇ悊绫?
-     * @param interfacesClass 闇€浠ｇ悊鐨勬帴鍙?
+     * 获取浠ｇ悊类
+     * @param interfacesClass 闇€浠ｇ悊鐨勬帴可
      * @param <T> 浠ｇ悊实现鐨勬硾鍨?
      * @return 浠ｇ悊实现
      */

@@ -17,7 +17,7 @@
 package com.zqzqq.bootkits.common;
 
 /**
- * 鎵撳寘绫诲瀷
+ * 打包类型
  *
  * @author starBlues
  * @since 3.0.0

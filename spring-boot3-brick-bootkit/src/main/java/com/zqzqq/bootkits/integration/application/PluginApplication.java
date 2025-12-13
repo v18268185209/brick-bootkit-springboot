@@ -38,13 +38,13 @@ public interface PluginApplication{
 
     /**
      * 鑾峰緱鎻掓彃浠舵搷浣滆€?
-     * @return 插件鎿嶄綔鑰?
+     * @return 插件操作鑰?
      */
     PluginOperator getPluginOperator();
 
     /**
      * 鑾峰緱鎻掓彃浠舵搷浣滆€?
-     * @return 插件鎿嶄綔鑰?
+     * @return 插件操作鑰?
      */
     PluginUser getPluginUser();
 }

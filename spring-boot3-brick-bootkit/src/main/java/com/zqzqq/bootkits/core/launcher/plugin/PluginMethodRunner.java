@@ -64,7 +64,7 @@ public class PluginMethodRunner extends MethodRunner {
                 }
                 throw new ClassNotFoundException(error);
             } else if(e instanceof NoClassDefFoundError){
-                String error = "插件[" + pluginUnique + "]娌℃湁鍙戠幇渚濊禆绫? [" +  e.getMessage() + "], " +
+                String error = "插件[" + pluginUnique + "]娌℃湁鍙戠幇依赖类 [" +  e.getMessage() + "], " +
                         "璇风‘淇濇彃浠朵緷璧栬瀹屾暣加载!";
                 throw new NoClassDefFoundError(error);
             }

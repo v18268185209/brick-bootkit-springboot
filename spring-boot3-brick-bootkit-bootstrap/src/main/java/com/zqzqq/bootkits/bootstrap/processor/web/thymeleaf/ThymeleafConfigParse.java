@@ -21,7 +21,7 @@ import com.zqzqq.bootkits.utils.ObjectUtils;
 import org.springframework.core.env.Environment;
 
 /**
- * 瑙ｆ瀽ThymeleafConfig配置
+ * 鐟欙絾鐎絋hymeleafConfig閰嶇疆
  *
  * @author starBlues
  * @since 3.0.0

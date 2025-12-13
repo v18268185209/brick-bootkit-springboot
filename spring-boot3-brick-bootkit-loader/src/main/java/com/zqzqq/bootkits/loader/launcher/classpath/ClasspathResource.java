@@ -30,7 +30,7 @@ import java.util.List;
 public interface ClasspathResource {
 
     /**
-     * 获取 classpath url 闆嗗悎
+     * 获取 classpath url 集合
      * @return List
      * @throws Exception 获取异常
      */

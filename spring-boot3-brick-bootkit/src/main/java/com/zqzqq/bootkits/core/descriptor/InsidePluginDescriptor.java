@@ -30,88 +30,88 @@ import java.util.Set;
 public interface InsidePluginDescriptor extends PluginDescriptor {
 
     /**
-     * 获取闇€瑕佹帓闄ょ殑鑷姩配置锟?
-     * @return 排除鐨勮嚜鍔ㄩ厤缃被闆嗗悎
+     * 获取需要排除的自动配置
+     * @return 排除的自动配置类集合
      */
     Set<String> getExcludeAutoConfigurations();
 
     /**
-     * 璁剧疆闇€瑕佹帓闄ょ殑鑷姩配置锟?
-     * @param excludeClasses 排除鐨勮嚜鍔ㄩ厤缃被闆嗗悎
+     * 璁剧疆需要排除的自动配置
+     * @param excludeClasses 排除的自动配置类集合
      */
     void setExcludeAutoConfigurations(Set<String> excludeClasses);
 
     /**
-     * 得到插件锟?Properties 配置
+     * 得到插件的Properties 配置
      * @return Properties
      */
     Properties getProperties();
 
     /**
-     * 获取插件配置文件鍚嶇О锟?
-     * 锟?getConfigFileLocation 配置浜岄€変竴, 如果閮芥湁鍊煎垯榛樿浣跨敤 getConfigFileName
+     * 获取插件配置文件名称
+     * 与getConfigFileLocation 配置二选一, 如果都有则优先使用 getConfigFileName
      * @return String
      */
     String getConfigFileName();
 
     /**
-     * 获取插件配置文件璺緞锟?
-     * 锟?getConfigFileName 配置浜岄€変竴, 如果閮芥湁鍊煎垯榛樿浣跨敤 getConfigFileName
+     * 获取插件配置文件路径
+     * 与getConfigFileName 配置二选一, 如果都有则优先使用 getConfigFileName
      * @return String
      */
     String getConfigFileLocation();
 
     /**
-     * 得到插件鍚姩鏃跺弬锟?
+     * 得到插件启动时参数
      * @return String
      */
     String getArgs();
 
     /**
-     * 得到鍐呴儴鐨勬彃浠惰矾锟?
+     * 得到内部的插件路径
      * @return Path
      */
     Path getInsidePluginPath();
 
     /**
-     * 获取插件文件鍚嶇О
+     * 获取插件文件名称
      * @return String
      */
     String getPluginFileName();
 
 
     /**
-     * 获取插件classes path璺緞
+     * 获取插件classes path路径
      * @return Path
      */
     String getPluginClassPath();
 
     /**
-     * 获取插件渚濊禆配置鐨勭洰锟?
+     * 获取插件依赖配置的目标
      * @return String
      */
     String getPluginLibDir();
 
     /**
-     * 获取插件渚濊禆鐨勮矾锟?
+     * 获取插件依赖的路径
      * @return String
      */
     Set<PluginLibInfo> getPluginLibInfo();
 
     /**
-     * 璁剧疆褰撳墠插件鍖呭惈主程序搴忓姞杞借祫婧愮殑鍖归厤
+     * 设置当前插件包含主程序包加载资源的匹配
      * @return Set
      */
     Set<String> getIncludeMainResourcePatterns();
 
     /**
-     * 璁剧疆褰撳墠插件排除浠庝富程序加载资源鐨勫尮锟?
+     * 设置当前插件排除从主程序加载资源的匹配
      * @return Set
      */
     Set<String> getExcludeMainResourcePatterns();
 
     /**
-     * 杞崲锟?PluginDescriptor
+     * 转换为PluginDescriptor
      * @return PluginDescriptor
      */
     PluginDescriptor toPluginDescriptor();

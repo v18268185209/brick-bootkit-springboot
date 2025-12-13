@@ -25,7 +25,7 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 
 /**
- * map绫诲瀷鐨勯厤缃俊鎭彁渚涜€?
+ * map类型鐨勯厤缃俊鎭彁渚涜€?
  *
  * @author starBlues
  * @version 3.0.3

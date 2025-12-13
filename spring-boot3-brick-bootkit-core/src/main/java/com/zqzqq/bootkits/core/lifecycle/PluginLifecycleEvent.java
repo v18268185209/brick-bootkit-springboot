@@ -19,7 +19,7 @@ package com.zqzqq.bootkits.core.lifecycle;
 import java.time.LocalDateTime;
 
 /**
- * 插件生命周期事件
+ * 鎻掍欢鐢熷懡鍛ㄦ湡事件
  *
  * @author starBlues
  * @since 4.0.0

@@ -25,7 +25,7 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
- * 插件 ResourcesDefine 文件定义
+ * 鎻掍欢 ResourcesDefine 鏂囦欢瀹氫箟
  *
  * @author starBlues
  * @since 3.0.0

@@ -108,7 +108,7 @@ public class ProdPackagePluginDescriptorLoader extends AbstractPluginDescriptorL
                 return index;
             }
             if(index.startsWith(configPluginLibDir)){
-                // 鍏煎瑙ｅ喅鏃х増鏈腑 jar/zip 鍖呬腑, 渚濊禆鍓嶇紑鎼哄甫 配置锟?lib 璺緞
+                // 鍏煎瑙ｅ喅鏃х増鏈腑 jar/zip 鍖呬腑, 依赖鍓嶇紑鎼哄甫 配置锟?lib 璺緞
                 return index;
             }
             return FilesUtils.joiningZipPath(pluginLibDir, index);

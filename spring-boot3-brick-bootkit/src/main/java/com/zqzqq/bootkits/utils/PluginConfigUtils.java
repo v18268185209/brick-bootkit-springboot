@@ -20,7 +20,7 @@ import com.zqzqq.bootkits.core.RuntimeMode;
 import com.zqzqq.bootkits.integration.IntegrationConfiguration;
 
 /**
- * 插件配置工具绫?
+ * 插件配置工具类
  * @author starBlues
  * @since 3.0.0
  * @version 3.0.0
@@ -90,10 +90,10 @@ public class PluginConfigUtils {
     }
 
     /**
-     * 得到插件鎺ュ彛鍓嶇紑
+     * 得到插件接口鍓嶇紑
      * @param configuration 配置
      * @param pluginId 插件id
-     * @return 鎺ュ彛鍓嶇紑
+     * @return 接口鍓嶇紑
      */
     public static String getPluginRestPrefix(IntegrationConfiguration configuration, String pluginId){
         String pathPrefix = configuration.pluginRestPathPrefix();

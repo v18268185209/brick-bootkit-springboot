@@ -29,24 +29,24 @@ public interface RegistryInfo {
     /**
      * 添加注册的信息
      * @param key 注册淇℃伅key
-     * @param value 注册淇℃伅鍊?
+     * @param value 注册淇℃伅值
      */
     void addRegistryInfo(String key, Object value);
 
     /**
      * 得到注册淇℃伅
      * @param key 注册淇℃伅key
-     * @param <T> 杩斿洖绫诲瀷娉涘瀷
-     * @return 注册淇℃伅鐨勫€?
+     * @param <T> 杩斿洖类型娉涘瀷
+     * @return 注册淇℃伅的值
      */
     <T> T getRegistryInfo(String key);
 
     /**
      * 得到注册淇℃伅
      * @param key 注册淇℃伅key
-     * @param notExistCreate 不存在鍦ㄧ殑璇? 杩涜鍒涘缓鎿嶄綔
-     * @param <T> 杩斿洖绫诲瀷娉涘瀷
-     * @return 注册淇℃伅鐨勫€?
+     * @param notExistCreate 不存在鍦ㄧ殑璇? 杩涜鍒涘缓操作
+     * @param <T> 杩斿洖类型娉涘瀷
+     * @return 注册淇℃伅的值
      */
     <T> T getRegistryInfo(String key, Supplier<T> notExistCreate);
 

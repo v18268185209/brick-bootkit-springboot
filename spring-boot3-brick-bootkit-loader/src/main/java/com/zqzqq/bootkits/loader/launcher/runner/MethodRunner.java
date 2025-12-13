@@ -23,7 +23,7 @@ import java.lang.reflect.Method;
 import java.util.Objects;
 
 /**
- * 反射杩愯鏂规硶
+ * 反射杩愯方法
  *
  * @author starBlues
  * @since 3.0.0

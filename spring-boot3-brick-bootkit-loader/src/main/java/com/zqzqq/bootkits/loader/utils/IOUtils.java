@@ -29,10 +29,10 @@ public class IOUtils {
 
     public static void copy(InputStream inputStream, OutputStream outputStream) throws IOException {
         if(inputStream == null){
-            throw new IllegalArgumentException("参数inputStream不能为空");
+            throw new IllegalArgumentException("閸欏倹鏆焛nputStream娑撳秷鍏樻稉铏光敄");
         }
         if(outputStream == null){
-            throw new IllegalArgumentException("参数inputStream不能为空");
+            throw new IllegalArgumentException("閸欏倹鏆焛nputStream娑撳秷鍏樻稉铏光敄");
         }
         BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
         BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(outputStream);
@@ -46,7 +46,7 @@ public class IOUtils {
 
     public static byte[] read(InputStream inputStream) throws IOException {
         if(inputStream == null){
-            throw new IllegalArgumentException("参数inputStream不能为空");
+            throw new IllegalArgumentException("閸欏倹鏆焛nputStream娑撳秷鍏樻稉铏光敄");
         }
         if(!(inputStream instanceof BufferedInputStream)){
             inputStream = new BufferedInputStream(inputStream);

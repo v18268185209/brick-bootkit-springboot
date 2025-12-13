@@ -86,7 +86,7 @@ public class ComposeDescriptorLoader implements PluginDescriptorLoader{
                     return pluginDescriptor;
                 }
             } catch (Exception e){
-                log.debug("闈炴硶璺緞插件: {}", location);
+                log.debug("非法路径插件: {}", location);
             }
         }
         return null;

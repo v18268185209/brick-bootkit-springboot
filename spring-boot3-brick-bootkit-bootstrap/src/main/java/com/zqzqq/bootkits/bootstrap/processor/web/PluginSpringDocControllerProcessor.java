@@ -113,7 +113,7 @@ public class PluginSpringDocControllerProcessor implements SpringPluginProcessor
                     setCachedOpenApiMethod.invoke(openApiService, null);
                 }
                 
-                // Spring Boot 3.5.x涓紝resetCalculatedOpenAPI鏂规硶鍙兘宸茶移除鎴栨洿鍚?
+                // Spring Boot 3.5.x涓紝resetCalculatedOpenAPI方法鍙兘宸茶移除鎴栨洿鍚?
                 // 尝试通过反射调用鍙兘存在鐨勫埛鏂版柟娉?
                 try {
                     Method resetMethod = ReflectionUtils.findMethod(openApiService.getClass(), "resetCalculatedOpenAPI");

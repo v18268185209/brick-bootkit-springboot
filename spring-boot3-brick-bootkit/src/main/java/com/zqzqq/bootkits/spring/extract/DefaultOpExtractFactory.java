@@ -189,7 +189,7 @@ public class DefaultOpExtractFactory implements OpExtractFactory {
 
 
     /**
-     * 扩展瀵硅薄鍖呰绫诲瀷
+     * 扩展对象鍖呰类型
      **/
     private static class ExtractWrapper{
         private final Object object;

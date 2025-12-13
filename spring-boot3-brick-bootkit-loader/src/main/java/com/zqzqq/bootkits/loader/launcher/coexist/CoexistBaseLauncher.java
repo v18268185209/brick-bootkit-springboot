@@ -63,17 +63,17 @@ public class CoexistBaseLauncher extends AbstractMainLauncher {
         try {
             URL url = getClass().getProtectionDomain().getCodeSource().getLocation();
             if (url != null) {
-                // 鏂规硶1锛氫娇鐢ㄦ爣鍑哢RLClassLoader鏋勯€犳柊实例
+                // 方法1锛氫娇鐢ㄦ爣鍑哢RLClassLoader鏋勯€犳柊实例
                 URLClassLoader tempLoader = new URLClassLoader(new URL[]{url}, classLoader.getParent());
                 
-                // 鏂规硶2锛氳皟鐢℅eneralUrlClassLoader鐨刴ergeResources鏂规硶
+                // 方法2锛氳皟鐢℅eneralUrlClassLoader鐨刴ergeResources方法
                 classLoader.mergeResources(tempLoader);
                 
                 System.out.println("Added resource to shared mode classloader: " + url);
             }
         } catch (Exception e) {
             System.err.println("Failed to add resources to shared mode classloader: " + e.getMessage());
-            // 鏂规硶3锛氱粓鏋佸洖閫€鏂规
+            // 方法3锛氱粓鏋佸洖閫€鏂规
             System.setProperty("java.system.class.loader", 
                 "com.zqzqq.bootkits.loader.classloader.GeneralUrlClassLoader");
             throw e;

@@ -30,14 +30,14 @@ public interface MultiCache<K, V> extends Cache<K, Collection<V>>{
 
     /**
      * put 涓€涓拷?
-     * @param key 缓存鐨刱ey
+     * @param key 缓存的key
      * @param value 缓存鐨勶拷?
      */
     void putSingle(K key, V value);
 
     /**
      * 得到绗竴涓獀alue
-     * @param key 缓存鐨刱ey
+     * @param key 缓存的key
      * @return 绗竴涓獀alue
      */
     V getFirst(K key);

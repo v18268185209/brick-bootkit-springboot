@@ -191,7 +191,7 @@ public class GenericClassLoader extends URLClassLoader implements ResourceLoader
     @Override
     public void close() throws IOException {
         try {
-            // 娓呯悊绫荤紦瀛橈紝闃叉内容瓨娉勬紡
+            // 清理绫荤紦瀛橈紝闃叉内容瓨娉勬紡
             pluginClassCache.clear();
             
             // 关闭资源加载宸ュ巶
@@ -203,7 +203,7 @@ public class GenericClassLoader extends URLClassLoader implements ResourceLoader
                 }
             }
             
-            // 调用鐖剁被关闭鏂规硶
+            // 调用鐖剁被关闭方法
             super.close();
         } catch (IOException e) {
             throw e;
@@ -215,7 +215,7 @@ public class GenericClassLoader extends URLClassLoader implements ResourceLoader
     @Override
     public void release() {
         try {
-            // 娓呯悊绫荤紦锟?
+            // 清理绫荤紦锟?
             pluginClassCache.clear();
             
             // 释放资源加载宸ュ巶

@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 组合的MainResourcePatternDefiner
+ * 缂佸嫬鎮庨惃鍑猘inResourcePatternDefiner
  *
  * @author starBlues
  * @since 3.0.0

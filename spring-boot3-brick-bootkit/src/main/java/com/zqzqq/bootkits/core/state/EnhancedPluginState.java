@@ -55,7 +55,7 @@ public enum EnhancedPluginState implements PluginState {
     }
 
     /**
-     * 获取所有夊厑璁哥殑杞崲鐘舵€?
+     * 获取所有夊厑璁哥殑杞崲状态
      */
     public Set<EnhancedPluginState> getAllowedTransitions() {
         return EnumSet.copyOf(allowedTransitions);

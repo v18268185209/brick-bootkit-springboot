@@ -52,7 +52,7 @@ public class ProdPluginDescriptorLoader implements PluginDescriptorLoader{
         } else if(ResourceUtils.isDirFile(location)){
             target = new ProdDirPluginDescriptorLoader(pluginDescriptorDecrypt);
         } else {
-            logger.warn("涓嶈兘瑙ｆ瀽文件: {}", location);
+            logger.warn("不能解析文件: {}", location);
             return null;
         }
         return target.load(location);

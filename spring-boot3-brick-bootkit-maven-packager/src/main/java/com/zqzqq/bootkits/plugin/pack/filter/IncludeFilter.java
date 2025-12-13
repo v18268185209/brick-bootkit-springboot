@@ -21,7 +21,7 @@ import org.apache.maven.artifact.Artifact;
 import java.util.List;
 
 /**
- * 鍖呭惈杩囨护鍣?
+ * 鍖呭惈过滤鍣?
  *
  * @author starBlues
  * @since 3.0.0

@@ -37,7 +37,7 @@ import java.util.zip.ZipEntry;
 import static com.zqzqq.bootkits.common.PackageStructure.*;
 
 /**
- * zip 鎵撳寘工具
+ * zip 打包工具
  *
  * @author starBlues
  * @since 3.0.0

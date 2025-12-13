@@ -20,7 +20,7 @@ import lombok.Data;
 import org.apache.maven.plugins.annotations.Parameter;
 
 /**
- * 渚濊禆Bean
+ * 濞撴碍绻嗙粋鍜甧an
  *
  * @author starBlues
  * @since 3.0.0

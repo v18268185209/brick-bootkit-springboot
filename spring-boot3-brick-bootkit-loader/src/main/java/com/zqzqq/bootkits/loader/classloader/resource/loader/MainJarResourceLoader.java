@@ -19,7 +19,7 @@ package com.zqzqq.bootkits.loader.classloader.resource.loader;
 import java.net.URL;
 
 /**
- * 主程序搴廽ar 鍚姩鏃惰祫婧愬姞杞藉櫒
+ * 涓荤▼搴忔惔寤絘r 閸氼垰濮╅弮鎯扮カ濠ф劕濮炴潪钘夋珤
  *
  * @author starBlues
  * @version 4.0.0

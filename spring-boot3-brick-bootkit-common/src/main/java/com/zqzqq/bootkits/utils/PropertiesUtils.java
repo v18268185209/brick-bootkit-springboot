@@ -19,7 +19,7 @@ package com.zqzqq.bootkits.utils;
 import java.util.Properties;
 
 /**
- * 鎿嶄綔 Manifest 工具绫?
+ * 操作 Manifest 工具类
  *
  * @author starBlues
  * @since 3.0.0
@@ -30,10 +30,10 @@ public abstract class PropertiesUtils {
     private PropertiesUtils(){}
 
     /**
-     * 获取鍊?
+     * 获取值
      *
      * @param properties properties
-     * @param key 获取鐨刱ey
+     * @param key 获取的key
      * @return 获取鐨勫€兼垨鑰卬ull
      */
     public static String getValue(Properties properties, String key){
@@ -41,12 +41,12 @@ public abstract class PropertiesUtils {
     }
 
     /**
-     * 获取鍊?
+     * 获取值
      *
      * @param properties properties
-     * @param key 获取鐨刱ey
+     * @param key 获取的key
      * @param notExitsThrowException 如果不存在鍦ㄦ槸鍚︽姏鍑哄紓甯?
-     * @return 获取鐨勫€?
+     * @return 获取的值或null
      */
     public static String getValue(Properties properties, String key, boolean notExitsThrowException){
         boolean throwException = false;

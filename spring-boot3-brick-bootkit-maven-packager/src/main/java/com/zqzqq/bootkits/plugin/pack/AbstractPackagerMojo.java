@@ -76,7 +76,7 @@ public abstract class AbstractPackagerMojo extends AbstractDependencyFilterMojo{
     }
 
     /**
-     * 鎵撳寘
+     * 打包
      * @throws MojoExecutionException MojoExecutionException
      * @throws MojoFailureException MojoFailureException
      */

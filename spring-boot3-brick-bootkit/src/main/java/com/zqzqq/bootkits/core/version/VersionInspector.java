@@ -29,13 +29,13 @@ public interface VersionInspector {
 
     /**
      * 妫€鏌ユ彃浠剁増鏈彿鏄惁鍚堟硶
-     * @param version 版本鍙?
+     * @param version 版本可
      * @throws PluginException 版本鍙蜂笉鍚堟硶鍒欐姏鍑哄紓甯?
      */
     void check(String version) throws PluginException;
 
     /**
-     * 姣旇緝 v1 鍜?v2版本.
+     * 比较 v1 鍜?v2版本.
      * @param v1 版本鍙风爜1
      * @param v2 版本鍙风爜2
      * @return 如果 v1澶т簬绛変簬v2, 鍒欒繑鍥炲ぇ浜庣瓑浜?鐨勬暟瀛? 鍚﹀垯杩斿洖灏忎簬0鐨勬暟瀛?

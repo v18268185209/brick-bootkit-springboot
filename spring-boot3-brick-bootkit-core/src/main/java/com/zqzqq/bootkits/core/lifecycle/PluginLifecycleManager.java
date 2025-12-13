@@ -22,7 +22,7 @@ public class PluginLifecycleManager {
     }
 
     /**
-     * 鏇存柊插件鐘舵€?
+     * 鏇存柊插件状态
      */
     public void updateState(String pluginId, PluginLifecycleState newState) {
         PluginLifecycleState oldState = pluginStates.getOrDefault(

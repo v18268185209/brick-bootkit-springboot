@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 
 /**
- * Knife4j Swagger 监听浜嬩欢
+ * Knife4j Swagger 监听事件
  * @version 1.0.0
  */
 public class Knife4jSwaggerListener implements PluginListener {
@@ -39,7 +39,7 @@ public class Knife4jSwaggerListener implements PluginListener {
 
     @Override
     public void stopSuccess(PluginInfo pluginInfo) {
-        // Knife4j浼氳嚜鍔ㄥ鐞咥PI鏂囨。鏇存柊锛屾棤闇€鎵嬪姩鎿嶄綔
+        // Knife4j浼氳嚜鍔ㄥ鐞咥PI鏂囨。鏇存柊锛屾棤闇€鎵嬪姩操作
         log.debug("插件[{}]锟?Knife4j 移除鎴愬姛", MsgUtils.getPluginUnique(pluginInfo.getPluginDescriptor()));
     }
 

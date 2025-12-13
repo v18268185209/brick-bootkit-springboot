@@ -1,7 +1,7 @@
 package com.zqzqq.bootkits.core.exception;
 
 /**
- * 插件异常处理鍣ㄦ帴鍙?
+ * 插件异常处理鍣ㄦ帴可
  */
 public interface PluginExceptionHandler {
     /**

@@ -30,7 +30,7 @@ public interface PluginUser {
     /**
      * 获取 Bean鍚嶇О
      * @param includeMainBeans 鏄惁鍖呭惈主程序锟?Bean
-     * @return Bean 鍖呰瀵硅薄
+     * @return Bean 鍖呰对象
      */
     BeanWrapper<Set<String>> getBeanName(boolean includeMainBeans);
 
@@ -51,7 +51,7 @@ public interface PluginUser {
     BeanWrapper<Object> getBean(String name, boolean includeMainBeans);
 
     /**
-     * 通过 Bean鍚嶇О获取鍏蜂綋插件涓殑 Bean 瀵硅薄
+     * 通过 Bean鍚嶇О获取鍏蜂綋插件涓殑 Bean 对象
      * @param pluginId 插件id锟?
      * @param name Bean鍚嶇О
      * @return Object
@@ -60,18 +60,18 @@ public interface PluginUser {
 
 
     /**
-     * 通过鎺ュ彛获取实现鐨勫璞￠泦锟?
-     * @param interfaceClass 鎺ュ彛鐨勭被
+     * 通过接口获取实现鐨勫璞￠泦锟?
+     * @param interfaceClass 接口鐨勭被
      * @param includeMainBeans 鏄惁鍖呭惈主程序锟?Bean
      * @param <T> Bean鐨勭被锟?
-     * @return Bean鍖呰瀵硅薄
+     * @return Bean鍖呰对象
      */
     <T> BeanWrapper<List<T>> getBeanByInterface(Class<T> interfaceClass, boolean includeMainBeans);
 
     /**
-     * 通过鎺ュ彛获取鍏蜂綋插件涓殑实现瀵硅薄闆嗗悎
+     * 通过接口获取鍏蜂綋插件涓殑实现对象集合
      * @param pluginId 插件id
-     * @param interfaceClass 鎺ュ彛鐨勭被
+     * @param interfaceClass 接口鐨勭被
      * @param <T> Bean鐨勭被锟?
      * @return List
      */
@@ -79,17 +79,17 @@ public interface PluginUser {
 
     /**
      * 通过注解获取 Bean
-     * @param annotationType 注解绫诲瀷
+     * @param annotationType 注解类型
      * @param includeMainBeans 鏄惁鍖呭惈主程序锟?Bean
-     * @return Bean鍖呰瀵硅薄
+     * @return Bean鍖呰对象
      */
     BeanWrapper<List<Object>> getBeansWithAnnotation(Class<? extends Annotation> annotationType, boolean includeMainBeans);
 
     /**
      * 通过注解获取鍏蜂綋插件涓殑 Bean
      * @param pluginId  插件id
-     * @param annotationType 注解绫诲瀷
-     * @return 璇ユ敞瑙ｇ殑 Bean 闆嗗悎
+     * @param annotationType 注解类型
+     * @return 璇ユ敞瑙ｇ殑 Bean 集合
      */
     List<Object> getBeansWithAnnotation(String pluginId, Class<? extends Annotation> annotationType);
 

@@ -61,7 +61,7 @@ public class ThymeleafConfig {
     private Boolean cache = true;
 
     /**
-     * 妯℃澘瑙ｆ瀽鍣ㄧ殑鎵ц椤哄簭, 鏁板瓧瓒婂皬瓒婂厛鎵ц
+     * 妯℃澘解析鍣ㄧ殑鎵ц椤哄簭, 鏁板瓧瓒婂皬瓒婂厛鎵ц
      */
     private Integer templateResolverOrder;
 

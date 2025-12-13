@@ -19,7 +19,7 @@ package com.zqzqq.bootkits.plugin.pack.encrypt;
 import lombok.Data;
 
 /**
- * 鍔犲瘑配置
+ * 加密配置
  *
  * @author starBlues
  * @since 3.0.1

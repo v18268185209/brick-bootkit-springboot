@@ -22,7 +22,7 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * 文件工具绫?
+ * 文件工具类
  *
  * @author starBlues
  * @since 3.0.0

@@ -34,9 +34,9 @@ public class AnnotationsUtils {
 
     /**
      * 存在注解鍒ゆ柇
-     * @param aClass 绫?
+     * @param aClass 类
      * @param isAllMatch 鏄惁鍖归厤鍏ㄩ儴注解
-     * @param annotationClasses 注解绫?
+     * @param annotationClasses 注解类
      * @return boolean
      */
     @SafeVarargs

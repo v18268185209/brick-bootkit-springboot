@@ -19,7 +19,7 @@ package com.zqzqq.bootkits.spring;
 import org.springframework.beans.factory.ListableBeanFactory;
 
 /**
- * spring bean factory 灏佽鎺ュ彛
+ * spring bean factory 鐏忎浇顥婇幒銉ュ經
  * @author starBlues
  * @since 3.0.0
  * @version 3.0.0

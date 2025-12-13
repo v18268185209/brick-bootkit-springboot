@@ -25,7 +25,7 @@ import java.nio.file.Path;
 import java.util.List;
 
 /**
- * 文件工具绫?
+ * 文件工具类
  *
  * @author starBlues
  * @since 3.0.0
@@ -252,9 +252,9 @@ public class FilesUtils {
     }
 
     /**
-     * 鍒ゆ柇鏌愪釜鐩綍鏄惁存在浜庢牴鐩綍涓?
+     * 鍒ゆ柇鏌愪釜鐩綍鏄惁存在浜庢牴鐩綍在
      * @param rootPath 鏍圭洰褰?
-     * @param comparePath 姣旇緝鐨勭洰褰?
+     * @param comparePath 比较鐨勭洰褰?
      * @return boolean
      */
     public static boolean includePath(Path rootPath, Path comparePath){

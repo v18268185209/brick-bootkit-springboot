@@ -25,7 +25,7 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.core.ResolvableType;
 
 /**
- * 插件监听鍣ㄦ墿灞?
+ * 閹绘帊娆㈤惄鎴濇儔闁革絻鍔嶆晶璺ㄤ沪?
  *
  * @author starBlues
  * @since 3.0.0

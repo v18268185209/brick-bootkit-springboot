@@ -76,7 +76,7 @@ public class EnhancedPluginInsideInfo implements PluginInsideInfo {
             trackResource(classLoader);
         }
         
-        // 娓呯悊鏃х殑ClassLoader
+        // 清理之前的ClassLoader
         if (oldLoader != null) {
             cleanupClassLoader(oldLoader);
         }
@@ -96,7 +96,7 @@ public class EnhancedPluginInsideInfo implements PluginInsideInfo {
         PluginState oldState = this.state;
         
         try {
-            // 鍓嶇疆鎷︽埅妫€锟?
+            // 预先拦截检查
             for (PluginStateInterceptor interceptor : interceptors) {
                 if (!interceptor.preStateChange(this, oldState, newState)) {
                     return;
@@ -114,7 +114,7 @@ public class EnhancedPluginInsideInfo implements PluginInsideInfo {
             // 鎵ц鐘舵€佸彉锟?
             this.state = newState;
             
-            // 璁板綍鏃堕棿锟?
+            // 记录时间戳
             if (newState == EnhancedPluginState.STARTED) {
                 this.startTime = System.currentTimeMillis();
             } else if (newState == EnhancedPluginState.STOPPED) {
@@ -123,7 +123,7 @@ public class EnhancedPluginInsideInfo implements PluginInsideInfo {
             
             // 鐗规畩鐘舵€佸锟?
             if (newState == EnhancedPluginState.UNLOADED) {
-                // 鍦ㄥ嵏杞界姸鎬佷笅娓呯悊所有夎祫锟?
+                // 鍦ㄥ嵏杞界姸鎬佷笅清理所有夎祫锟?
                 cleanupAllResources();
             }
             
@@ -132,7 +132,7 @@ public class EnhancedPluginInsideInfo implements PluginInsideInfo {
                 interceptor.postStateChange(this, oldState, newState);
             }
         } catch (Exception e) {
-            // 异常閫氱煡
+            // 异常通知
             for (PluginStateInterceptor interceptor : interceptors) {
                 interceptor.onStateChangeFailure(this, oldState, newState, e);
             }
@@ -183,8 +183,8 @@ public class EnhancedPluginInsideInfo implements PluginInsideInfo {
     }
     
     /**
-     * 移除鎷︽埅锟?
-     * @param interceptor 瑕佺Щ闄ょ殑鎷︽埅锟?
+     * 移除拦截器
+     * @param interceptor 要移除的拦截器
      * @return 如果成功移除返回true，否则返回false
      */
     public boolean removeInterceptor(PluginStateInterceptor interceptor) {
@@ -192,7 +192,7 @@ public class EnhancedPluginInsideInfo implements PluginInsideInfo {
     }
     
     /**
-     * 娓呯悊所有夋嫤鎴櫒
+     * 清理所有夋嫤鎴櫒
      */
     public void clearInterceptors() {
         // 淇濈暀榛樿鎷︽埅锟?
@@ -214,7 +214,7 @@ public class EnhancedPluginInsideInfo implements PluginInsideInfo {
     }
     
     /**
-     * 璺熻釜资源浠ヤ究鍦ㄥ嵏杞芥椂娓呯悊
+     * 璺熻釜资源浠ヤ究鍦ㄥ嵏杞芥椂清理
      * @param resource 闇€瑕佽窡韪殑资源
      */
     public void trackResource(Object resource) {
@@ -224,10 +224,10 @@ public class EnhancedPluginInsideInfo implements PluginInsideInfo {
     }
     
     /**
-     * 娓呯悊所有夎窡韪殑资源
+     * 清理所有夎窡韪殑资源
      */
     private void cleanupAllResources() {
-        // 娓呯悊所有夎窡韪殑资源
+        // 清理所有夎窡韪殑资源
         Iterator<WeakReference<Object>> iterator = resourceTracker.iterator();
         while (iterator.hasNext()) {
             WeakReference<Object> ref = iterator.next();
@@ -246,16 +246,16 @@ public class EnhancedPluginInsideInfo implements PluginInsideInfo {
             iterator.remove();
         }
         
-        // 娓呯悊鎷︽埅锟?
+        // 清理拦截器
         clearInterceptors();
         
-        // 娓呯悊扩展淇℃伅提供者锟?
+        // 清理扩展信息提供者
         this.extensionInfoSupplier = Collections::emptyMap;
     }
     
     /**
      * 增强的ClassLoader清理方法
-     * 处理鍚勭绫诲瀷鐨凜lassLoader骞跺皾璇曢噴鏀惧叾资源
+     * 处理鍚勭类型鐨凜lassLoader骞跺皾璇曢噴鏀惧叾资源
      */
     private void cleanupClassLoader(ClassLoader classLoader) {
         if (classLoader == null) {
@@ -278,7 +278,7 @@ public class EnhancedPluginInsideInfo implements PluginInsideInfo {
             if (classLoader instanceof URLClassLoader) {
                 URLClassLoader urlClassLoader = (URLClassLoader) classLoader;
                 try {
-                    // 尝试浣跨敤close鏂规硶锛圝DK 1.7+锟?
+                    // 尝试使用close方法（JDK 1.7+）
                     Method closeMethod = URLClassLoader.class.getDeclaredMethod("close");
                     closeMethod.setAccessible(true);
                     closeMethod.invoke(urlClassLoader);
@@ -306,7 +306,7 @@ public class EnhancedPluginInsideInfo implements PluginInsideInfo {
                                     closeJarMethod.invoke(jarFile);
                                 }
                             } catch (Exception ex) {
-                                // 忽略鍗曚釜loader鐨勬竻鐞嗛敊锟?
+                                // 忽略单个loader的清理错误
                             }
                         }
                         loaders.clear();
@@ -328,15 +328,15 @@ public class EnhancedPluginInsideInfo implements PluginInsideInfo {
                 }
             }
             
-            // 3. 尝试通过反射娓呯悊ClassLoader鐨勭紦锟?
+            // 3. 尝试通过反射清理ClassLoader的缓存
             try {
-                // 娓呯悊绫荤紦锟?
+                // 清理类缓存
                 Field classesField = ClassLoader.class.getDeclaredField("classes");
                 classesField.setAccessible(true);
                 Vector<Class<?>> classes = (Vector<Class<?>>) classesField.get(classLoader);
                 classes.clear();
                 
-                // 尝试娓呯悊鍏朵粬鍙兘鐨勭紦瀛樺瓧锟?
+                // 尝试清理鍏朵粬鍙兘鐨勭紦瀛樺瓧锟?
                 clearFieldIfExists(classLoader, "resourceCache");
                 clearFieldIfExists(classLoader, "packageMap");
                 clearFieldIfExists(classLoader, "nativeLibraries");
@@ -347,13 +347,13 @@ public class EnhancedPluginInsideInfo implements PluginInsideInfo {
             }
             
         } catch (Throwable t) {
-            // 鎹曡幏所有夊紓甯革紝纭繚涓嶄細褰卞搷鍏朵粬鎿嶄綔
+            // 鎹曡幏所有夊紓甯革紝纭繚涓嶄細褰卞搷鍏朵粬操作
             LOGGER.log(Level.WARNING, "Unexpected error during ClassLoader cleanup: " + classLoader, t);
         }
     }
     
     /**
-     * 尝试娓呯悊ClassLoader涓殑鎸囧畾字段
+     * 尝试清理ClassLoader涓殑鎸囧畾字段
      */
     private void clearFieldIfExists(ClassLoader classLoader, String fieldName) {
         try {

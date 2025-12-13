@@ -17,7 +17,7 @@
 package com.zqzqq.bootkits.common.cipher;
 
 /**
- * 插件瀵嗙爜鎺ュ彛
+ * 插件瀵嗙爜接口
  *
  * @author starBlues
  * @since 3.0.1

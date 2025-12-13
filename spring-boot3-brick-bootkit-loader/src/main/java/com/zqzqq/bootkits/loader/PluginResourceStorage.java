@@ -176,7 +176,7 @@ public class PluginResourceStorage {
                     }
                 }
             } finally {
-                // 纭繚闆嗗悎琚竻绌猴紝闃叉内容瓨娉勬紡
+                // 纭繚集合琚竻绌猴紝闃叉内容瓨娉勬紡
                 jarFileMap.clear();
                 rootJarFileMap.clear();
             }

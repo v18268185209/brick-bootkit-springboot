@@ -120,7 +120,7 @@ public class PluginThymeleafInvolved implements PluginLaunchInvolved {
     }
 
     private Set<ITemplateResolver> getTemplateResolvers(SpringTemplateEngine springTemplateEngine) {
-        String errorMsg = "褰撳墠插件涓嶈兘浣跨敤Thymeleaf, 主程序搴忔湭鍙戠幇Thymeleaf注册鍏ュ彛";
+        String errorMsg = "褰撳墠插件不能浣跨敤Thymeleaf, 主程序搴忔湭鍙戠幇Thymeleaf注册鍏ュ彛";
         if(springTemplateEngine == null){
             logger.error(errorMsg);
         }
@@ -131,7 +131,7 @@ public class PluginThymeleafInvolved implements PluginLaunchInvolved {
             }
             return templateResolvers;
         } catch (Exception e){
-            logger.error("褰撳墠插件涓嶈兘浣跨敤Thymeleaf, 获取主程序搴忔敞鍐屽叆鍙ｅけ璐? {}", e.getMessage());
+            logger.error("褰撳墠插件不能浣跨敤Thymeleaf, 获取主程序搴忔敞鍐屽叆鍙ｅけ璐? {}", e.getMessage());
             return null;
         }
     }

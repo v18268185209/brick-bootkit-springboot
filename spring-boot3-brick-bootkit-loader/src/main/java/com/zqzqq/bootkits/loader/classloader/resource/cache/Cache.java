@@ -31,8 +31,8 @@ public interface Cache<K, V> {
 
     /**
      * 缓存数据
-     * @param key 缓存鐨刱ey
-     * @param value 缓存鐨勫€?
+     * @param key 缓存的key
+     * @param value 缓存的值
      */
     void put(K key, V value);
 
@@ -50,16 +50,16 @@ public interface Cache<K, V> {
     boolean containsKey(K key);
 
     /**
-     * 获取缓存鍊?
-     * @param key 缓存鐨刱ey
-     * @return 缓存鍊?不存在鍦ㄨ繑鍥瀗ull
+     * 获取缓存值
+     * @param key 缓存的key
+     * @return 缓存值不存在鍦ㄨ繑鍥瀗ull
      */
     V get(K key);
 
     /**
      * 得到缓存鍊笺€傚鏋滀笉存在鏀鹃粯璁ょ殑
-     * @param key 缓存鐨刱ey
-     * @param supplier 榛樿鍊?
+     * @param key 缓存的key
+     * @param supplier 榛樿值
      * @param defaultAdded 如果不存在鍦?榛樿鐨勯噴鏀炬坊鍔犺繘鍏ョ紦瀛樹腑
      * @return V
      */
@@ -67,8 +67,8 @@ public interface Cache<K, V> {
 
     /**
      * 移除缓存
-     * @param key 缓存鐨刱ey
-     * @return 移除鐨勫€?
+     * @param key 缓存的key
+     * @return 移除的值
      */
     V remove(K key);
 

@@ -19,7 +19,7 @@ package com.zqzqq.bootkits.utils;
 import java.lang.reflect.Field;
 
 /**
- * 字段杩囨护鎺ュ彛
+ * 字段过滤接口
  *
  * @author starBlues
  * @since 3.0.0
@@ -29,10 +29,10 @@ import java.lang.reflect.Field;
 public interface FieldFilter {
 
     /**
-     * 杩囨护
+     * 过滤
      *
      * @param field 褰撳墠字段
-     * @return true 鍏佽, false 涓嶅厑璁?
+     * @return true 鍏佽, false 不可璁?
      */
     boolean filter(Field field);
 

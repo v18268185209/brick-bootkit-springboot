@@ -27,7 +27,7 @@ import java.util.Set;
 
 
 /**
- * 插件闆嗘垚鏃剁殑配置鎺ュ彛銆傛彃浠堕泦鎴愮殑配置鎺ュ彛
+ * 插件闆嗘垚鏃剁殑配置接口銆傛彃浠堕泦鎴愮殑配置接口
  * @author starBlues
  * @version 3.0.1
  */
@@ -78,7 +78,7 @@ public interface IntegrationConfiguration {
 
     /**
      * 鏄惁鍚敤插件id浣滀负RestController鐨勮矾寰勫墠缂€銆?
-     * 如果鍚敤銆傚垯璺緞鍓嶇紑涓?pluginRestPathPrefix() 杩斿洖鐨勮矾寰勬嫾鎺ユ彃浠秈d,
+     * 如果鍚敤銆傚垯璺緞鍓嶇紑在pluginRestPathPrefix() 杩斿洖鐨勮矾寰勬嫾鎺ユ彃浠秈d,
      * 鍗充负: /pathPrefix/pluginId/**
      * @return boolean
      */
@@ -104,22 +104,22 @@ public interface IntegrationConfiguration {
     List<String> sortInitPluginIds();
 
     /**
-     * 褰撳墠主程序搴忕殑版本鍙? 鐢ㄤ簬鏍￠獙插件鏄惁鍙畨瑁?
+     * 褰撳墠主程序搴忕殑版本可 鐢ㄤ簬鏍￠獙插件鏄惁鍙畨瑁?
      * 插件涓彲通过插件配置淇℃伅 requires 鏉ユ寚瀹氬彲瀹夎鐨勪富程序版本
-     * @return 绯荤粺版本鍙? 如果涓轰负绌烘垨鑰?0.0.0 琛ㄧず涓嶆牎楠?
+     * @return 绯荤粺版本可 如果涓轰负绌烘垨鑰?0.0.0 琛ㄧず涓嶆牎楠?
      */
     String version();
 
     /**
      * 璁剧疆涓簍rue琛ㄧず插件璁剧疆鐨剅equires鐨勭増鏈彿瀹屽叏鍖归厤version版本鍙锋墠鍙厑璁告彃浠跺畨瑁? 鍗? [requires]=[x.y.z]
-     * 璁剧疆涓篺alse琛ㄧず插件璁剧疆鐨剅equires鐨勭増鏈彿灏忎簬绛変簬version鍊? 插件灏卞彲瀹夎, 鍗砙requires]灏忎簬绛変簬[x.y.z]
+     * 璁剧疆涓篺alse琛ㄧず插件璁剧疆鐨剅equires鐨勭増鏈彿灏忎簬绛変簬version值 插件灏卞彲瀹夎, 鍗砙requires]灏忎簬绛変簬[x.y.z]
      * 榛樿涓篺alse
      * @return true or false
      */
     Boolean exactVersion();
 
     /**
-     * 鏄惁鎵弿插件 swagger 鎺ュ彛
+     * 鏄惁鎵弿插件 swagger 接口
      * @return true 鍚姩, false 绂佺敤銆傞粯璁ゅ惎鐢?
      */
     Boolean pluginSwaggerScan();

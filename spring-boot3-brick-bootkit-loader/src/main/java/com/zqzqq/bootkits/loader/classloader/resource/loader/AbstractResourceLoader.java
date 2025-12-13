@@ -52,7 +52,7 @@ public abstract class AbstractResourceLoader implements ResourceLoader{
     @Override
     public final synchronized void load(ResourceStorage resourceStorage) throws Exception{
         if(loaded){
-            throw new Exception(this.getClass().getName()+": 宸茬粡鍒濆鍖栦簡, 涓嶈兘鍐嶅垵濮嬪寲!");
+            throw new Exception(this.getClass().getName()+": 宸茬粡鍒濆鍖栦簡, 不能鍐嶅垵濮嬪寲!");
         }
         try {
             // 添加root 资源
