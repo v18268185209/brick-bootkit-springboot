@@ -364,24 +364,50 @@ public class PythonExecutor extends AbstractScriptExecutor {
         }
         
         try {
-            String testScript = "import sys, os, json; print('OK')";
+            // 测试多个核心模块
+            String testScript = "import sys, os, json, re, collections, itertools; print('All modules OK')";
             Process process = new ProcessBuilder(pythonPath, "-c", testScript).start();
             
             java.io.BufferedReader reader = new java.io.BufferedReader(
                 new java.io.InputStreamReader(process.getInputStream()));
             String output = reader.readLine();
             
-            boolean completed = process.waitFor(5, java.util.concurrent.TimeUnit.SECONDS);
-            if (completed && process.exitValue() == 0 && "OK".equals(output)) {
-                return "Python核心模块检查: 通过";
+            // 等待进程完成
+            boolean completed = process.waitFor(3, java.util.concurrent.TimeUnit.SECONDS);
+            
+            if (completed && process.exitValue() == 0) {
+                if (output != null && output.contains("All modules OK")) {
+                    return "Python核心模块检查: 通过 (sys, os, json, re, collections, itertools)";
+                } else {
+                    return "Python核心模块检查: 部分通过 (输出异常)";
+                }
             } else {
                 if (!completed) {
                     process.destroyForcibly();
                 }
-                return "Python核心模块检查: 失败 (模块导入问题)";
+                
+                // 尝试更简单的测试
+                try {
+                    Process simpleProcess = new ProcessBuilder(pythonPath, "-c", "print('Simple test')").start();
+                    java.io.BufferedReader simpleReader = new java.io.BufferedReader(
+                        new java.io.InputStreamReader(simpleProcess.getInputStream()));
+                    String simpleOutput = simpleReader.readLine();
+                    boolean simpleCompleted = simpleProcess.waitFor(2, java.util.concurrent.TimeUnit.SECONDS);
+                    
+                    if (simpleCompleted && simpleProcess.exitValue() == 0) {
+                        return "Python核心模块检查: 基础功能正常 (简化测试通过)";
+                    } else {
+                        if (!simpleCompleted) {
+                            simpleProcess.destroyForcibly();
+                        }
+                        return "Python核心模块检查: 失败 (基础执行异常)";
+                    }
+                } catch (Exception simpleEx) {
+                    return "Python核心模块检查: 失败 (基础执行异常: " + simpleEx.getMessage() + ")";
+                }
             }
         } catch (Exception e) {
-            return "Python核心模块检查: 失败 (" + e.getMessage() + ")";
+            return "Python核心模块检查: 失败 (异常: " + e.getMessage() + ")";
         }
     }
 

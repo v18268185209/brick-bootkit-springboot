@@ -25,6 +25,11 @@ public enum ScriptType {
     POWERSHELL(".ps1", "powershell"),
     
     /**
+     * Lua脚本
+     */
+    LUA(".lua", "lua"),
+    
+    /**
      * Python脚本
      */
     PYTHON(".py", "python"),
