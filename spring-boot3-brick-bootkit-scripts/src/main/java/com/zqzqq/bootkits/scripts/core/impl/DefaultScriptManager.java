@@ -328,10 +328,46 @@ public class DefaultScriptManager implements ScriptManager {
             registerExecutor(new BatchExecutor());
         }
         
+        // 注册PowerShell执行器
+        PowerShellExecutor powerShellExecutor = new PowerShellExecutor();
+        if (powerShellExecutor.isPowerShellAvailable()) {
+            registerExecutor(powerShellExecutor);
+        }
+        
         // 注册Python执行器
         PythonExecutor pythonExecutor = new PythonExecutor();
         if (pythonExecutor.isPythonAvailable()) {
             registerExecutor(pythonExecutor);
+        }
+        
+        // 注册Lua执行器
+        LuaExecutor luaExecutor = new LuaExecutor();
+        if (luaExecutor.isLuaAvailable()) {
+            registerExecutor(luaExecutor);
+        }
+        
+        // 注册Ruby执行器
+        RubyExecutor rubyExecutor = new RubyExecutor();
+        if (rubyExecutor.isRubyAvailable()) {
+            registerExecutor(rubyExecutor);
+        }
+        
+        // 注册Perl执行器
+        PerlExecutor perlExecutor = new PerlExecutor();
+        if (perlExecutor.isPerlAvailable()) {
+            registerExecutor(perlExecutor);
+        }
+        
+        // 注册Node.js执行器
+        NodeJsExecutor nodeJsExecutor = new NodeJsExecutor();
+        if (nodeJsExecutor.isNodeAvailable()) {
+            registerExecutor(nodeJsExecutor);
+        }
+        
+        // 注册Groovy执行器
+        GroovyExecutor groovyExecutor = new GroovyExecutor();
+        if (groovyExecutor.isGroovyAvailable()) {
+            registerExecutor(groovyExecutor);
         }
         
         // 注册可执行文件执行器

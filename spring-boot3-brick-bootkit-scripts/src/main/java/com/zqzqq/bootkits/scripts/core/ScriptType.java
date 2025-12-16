@@ -35,6 +35,26 @@ public enum ScriptType {
     PYTHON(".py", "python"),
     
     /**
+     * Ruby脚本
+     */
+    RUBY(".rb", "ruby"),
+    
+    /**
+     * Perl脚本
+     */
+    PERL(".pl", "perl"),
+    
+    /**
+     * Node.js脚本
+     */
+    NODEJS(".js", "nodejs"),
+    
+    /**
+     * Groovy脚本
+     */
+    GROOVY(".groovy", "groovy"),
+    
+    /**
      * JavaScript脚本
      */
     JAVASCRIPT(".js", "javascript"),
