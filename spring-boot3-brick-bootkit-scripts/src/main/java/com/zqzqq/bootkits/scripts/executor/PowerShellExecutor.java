@@ -340,7 +340,7 @@ public class PowerShellExecutor extends AbstractScriptExecutor {
         check.addDiagnostic("类型: " + (isCore ? "PowerShell Core" : "Windows PowerShell"));
         
         // 检查PowerShell执行策略
-        check.addDiagnostic(checkExecutionPolicy());
+        check.addDiagnostic(checkExecutionPolicy(check));
         
         return check;
     }
@@ -348,9 +348,10 @@ public class PowerShellExecutor extends AbstractScriptExecutor {
     /**
      * 检查PowerShell执行策略
      *
+     * @param check PowerShell环境检查结果对象
      * @return 执行策略检查结果
      */
-    private String checkExecutionPolicy() {
+    private String checkExecutionPolicy(PowerShellEnvironmentCheck check) {
         try {
             Process process = new ProcessBuilder(powerShellPath, "-Command", "Get-ExecutionPolicy").start();
             java.io.BufferedReader reader = new java.io.BufferedReader(
