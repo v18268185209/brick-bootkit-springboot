@@ -206,7 +206,7 @@ public class DefaultScriptPerformanceMonitor implements ScriptPerformanceMonitor
             .mapToDouble(r -> r.getMetrics().getCpuUsagePercent())
             .average()
             .orElse(0.0);
-        long avgMemoryUsage = filteredRecords.stream()
+        long avgMemoryUsage = (long) filteredRecords.stream()
             .mapToLong(r -> r.getMetrics().getMemoryUsedBytes())
             .average()
             .orElse(0.0);

@@ -2,6 +2,7 @@ package com.zqzqq.bootkits.scripts.batch.impl;
 
 import com.zqzqq.bootkits.scripts.batch.*;
 import com.zqzqq.bootkits.scripts.core.*;
+import com.zqzqq.bootkits.scripts.core.impl.DefaultScriptManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -883,13 +884,21 @@ public class DefaultScriptBatchManager implements ScriptBatchManager {
             for (ScriptConfiguration script : scripts) {
                 try {
                     long scriptStartTime = System.currentTimeMillis();
-                    ScriptExecutionResult result = scriptManager.executeScript(script, parameters);
+
+                    String[] arguments = convertParametersToArguments(parameters);
+                    // 使用正确的executeScript方法签名
+                    ScriptExecutionResult result = scriptManager.executeScript(
+                            ScriptType.SHELL,
+                            script.getScriptContent(),
+                            arguments,
+                            script
+                    );
                     results.add(result);
                     totalScriptsProcessed.incrementAndGet();
                     totalTime += System.currentTimeMillis() - scriptStartTime;
                 } catch (Exception e) {
                     errors.add(e);
-                    logger.warn("脚本执行失败: {}", script.getScriptPath(), e);
+                    logger.warn("脚本执行失败: {}", script, e);
                 }
             }
         } else {
@@ -897,10 +906,18 @@ public class DefaultScriptBatchManager implements ScriptBatchManager {
             List<CompletableFuture<ScriptExecutionResult>> futures = scripts.stream()
                 .map(script -> CompletableFuture.supplyAsync(() -> {
                     try {
-                        return scriptManager.executeScript(script, parameters);
+                        // 将参数Map转换为String数组
+                        String[] arguments = convertParametersToArguments(parameters);
+                        // 使用正确的executeScript方法签名
+                        return  scriptManager.executeScript(
+                                ScriptType.SHELL,
+                                script.getScriptContent(),
+                                arguments,
+                                script
+                        );
                     } catch (Exception e) {
                         errors.add(e);
-                        logger.warn("脚本执行失败: {}", script.getScriptPath(), e);
+                        logger.warn("脚本执行失败: {}", script, e);
                         return null;
                     }
                 }, executorService))
@@ -985,7 +1002,16 @@ public class DefaultScriptBatchManager implements ScriptBatchManager {
                 scriptConfig.setScriptPath("/generated/script-" + i + ".sh");
                 scriptConfig.setScriptContent("# Generated from template " + templateIds.get(i));
                 
-                ScriptExecutionResult result = scriptManager.executeScript(scriptConfig, parameters);
+                // 将参数Map转换为String数组
+                String[] arguments = convertParametersToArguments(parameters);
+                
+                // 使用正确的executeScript方法签名
+                ScriptExecutionResult result = scriptManager.executeScript(
+                    ScriptType.SHELL,
+                    scriptConfig.getScriptContent(),
+                    arguments,
+                    scriptConfig
+                );
                 results.add(result);
                 totalScriptsProcessed.incrementAndGet();
                 
@@ -1209,5 +1235,31 @@ public class DefaultScriptBatchManager implements ScriptBatchManager {
         if (result.getOperationTimeMs() > 0) {
             totalExecutionTime.addAndGet(result.getOperationTimeMs());
         }
+    }
+    
+    /**
+     * 将参数Map转换为String数组
+     *
+     * @param parameters 参数Map
+     * @return String数组
+     */
+    private String[] convertParametersToArguments(Map<String, Object> parameters) {
+        if (parameters == null || parameters.isEmpty()) {
+            return new String[0];
+        }
+        
+        List<String> arguments = new ArrayList<>();
+        for (Map.Entry<String, Object> entry : parameters.entrySet()) {
+            String key = entry.getKey();
+            Object value = entry.getValue();
+            
+            if (value != null) {
+                arguments.add(key + "=" + value.toString());
+            } else {
+                arguments.add(key + "=");
+            }
+        }
+        
+        return arguments.toArray(new String[0]);
     }
 }

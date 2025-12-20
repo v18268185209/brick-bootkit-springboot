@@ -58,6 +58,16 @@ public class ScriptConfiguration {
     private String group;
     
     /**
+     * 脚本路径
+     */
+    private String scriptPath;
+    
+    /**
+     * 脚本内容
+     */
+    private String scriptContent;
+    
+    /**
      * 构造函数
      */
     public ScriptConfiguration() {
@@ -170,6 +180,24 @@ public class ScriptConfiguration {
         return this;
     }
     
+    public String getScriptPath() {
+        return scriptPath;
+    }
+    
+    public ScriptConfiguration setScriptPath(String scriptPath) {
+        this.scriptPath = scriptPath;
+        return this;
+    }
+    
+    public String getScriptContent() {
+        return scriptContent;
+    }
+    
+    public ScriptConfiguration setScriptContent(String scriptContent) {
+        this.scriptContent = scriptContent;
+        return this;
+    }
+    
     /**
      * 创建默认配置
      *
@@ -208,6 +236,8 @@ public class ScriptConfiguration {
                 ", maxOutputSize=" + maxOutputSize +
                 ", user='" + user + '\'' +
                 ", group='" + group + '\'' +
+                ", scriptPath='" + scriptPath + '\'' +
+                ", scriptContent='" + scriptContent + '\'' +
                 '}';
     }
 }

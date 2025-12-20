@@ -18,7 +18,7 @@ public class VariableContext {
     private final Map<String, String> metadata;
     
     // 上下文信息
-    private final String contextId;
+    private String contextId;
     private final LocalDateTime createdTime;
     private LocalDateTime lastModifiedTime;
     private final Map<String, Object> executionContext;
