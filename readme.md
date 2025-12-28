@@ -145,7 +145,7 @@
 <dependency>
 <groupId>com.zqzqq</groupId>
 <artifactId>spring-boot3-brick-bootkit</artifactId>
-<version>4.0.1</version>
+<version>4.0.2</version>
 </dependency>
 
 ```
@@ -156,7 +156,7 @@
 <dependency>
 <groupId>com.zqzqq</groupId>
 <artifactId>spring-boot3-brick-bootkit-maven-packager</artifactId>
-<version>4.0.1</version>
+<version>4.0.2</version>
 </dependency>
 
 ```
@@ -169,7 +169,7 @@ com.zqzqq.bootkits.*
 
 
 ### 更新
-[4.0.1](./doc/updates/4.0.1.md)
+[4.0.2](./doc/updates/4.0.2.md)
 
 
 ### 文档地址

@@ -45,6 +45,11 @@ public enum ScriptType {
     PERL(".pl", "perl"),
     
     /**
+     * JavaScript脚本
+     */
+    JAVASCRIPT(".js", "javascript"),
+    
+    /**
      * Node.js脚本
      */
     NODEJS(".js", "nodejs"),
@@ -53,11 +58,6 @@ public enum ScriptType {
      * Groovy脚本
      */
     GROOVY(".groovy", "groovy"),
-    
-    /**
-     * JavaScript脚本
-     */
-    JAVASCRIPT(".js", "javascript"),
     
     /**
      * 可执行文件
